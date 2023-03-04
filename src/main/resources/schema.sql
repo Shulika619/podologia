@@ -9,4 +9,4 @@ INSERT INTO Category (category_name, description)
 VALUES ('Профильные подологические услуги', 'ПОДОЛОГ-ЭКСПЕРТ - Ефимова Иванна Александровна. ПОДОЛОГ - Шаповалова Татьяна, Мамалига Ирина');
 
 INSERT INTO Category (category_name, description)
-VALUES ('test','test category 22222222222');
+VALUES ('test','test category 11111111111');

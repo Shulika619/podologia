@@ -1,6 +1,7 @@
 package dev.shulika.podologia.rest;
 
 import dev.shulika.podologia.model.Category;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,12 +33,12 @@ public class CategoryRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody Category category) {
+    public void create(@RequestBody @Valid Category category) {
         categoryService.create(category);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody Category category) {
+    public void update(@PathVariable Long id, @RequestBody @Valid Category category) {
         categoryService.update(id, category);
     }
 

@@ -45,11 +45,11 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public void update(Long id, Category category) {
-        categoryRepository.findById(id);    // TODO:
+        categoryRepository.findById(id);                    // TODO: update
     }
 
     @Override
-    public void updateCategoryFields(Long id, Map<String, Object> fields) {
+    public void updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: update status
         Optional<Category> existingCategory = categoryRepository.findById(id);
         if (existingCategory.isPresent()) {
             fields.forEach((key, value) -> {
