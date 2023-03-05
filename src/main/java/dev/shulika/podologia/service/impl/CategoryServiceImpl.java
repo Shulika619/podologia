@@ -55,8 +55,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void create(CategoryRequestDTO category) {
-//        categoryRepository.save(category);
+    public void create(CategoryRequestDTO categoryRequestDTO) {
+        log.info("IN CategoryServiceImpl - create: STARTED -> CategoryMapper.fromDTO");
+        categoryRepository.save(CategoryMapper.fromDTO(categoryRequestDTO));
     }
 
     @Override

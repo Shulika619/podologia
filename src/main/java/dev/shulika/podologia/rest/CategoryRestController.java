@@ -52,7 +52,7 @@ public class CategoryRestController {
     }
 
     @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody @Valid CategoryRequestDTO category) {
         categoryService.create(category);
     }
