@@ -1,10 +1,14 @@
 package dev.shulika.podologia.service;
 
+import dev.shulika.podologia.dto.CategoryDTO;
 import dev.shulika.podologia.model.Category;
+import dev.shulika.podologia.util.CategoryMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dev.shulika.podologia.repository.CategoryRepository;
@@ -24,13 +28,15 @@ public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> findAll() {
+//        return CategoryMapper.toDTO(categoryRepository.findAll());
+        return null;
     }
 
     @Override
-    public Optional<Category> findById(Long id) {
-        return Optional.ofNullable(categoryRepository.findById(id).orElse(null));
+    public CategoryDTO findById(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        return CategoryMapper.toDTO(category);
     }
 
     @Override
@@ -39,12 +45,12 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void create(Category category) {
-        categoryRepository.save(category);
+    public void create(CategoryDTO category) {
+//        categoryRepository.save(category);
     }
 
     @Override
-    public void update(Long id, Category category) {
+    public void update(Long id, CategoryDTO category) {
         categoryRepository.findById(id);                    // TODO: update
     }
 

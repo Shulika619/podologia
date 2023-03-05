@@ -1,5 +1,6 @@
 package dev.shulika.podologia.rest;
 
+import dev.shulika.podologia.dto.CategoryDTO;
 import dev.shulika.podologia.model.Category;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +23,23 @@ public class CategoryRestController {
     private final CategoryServiceImpl categoryService;
 
     @GetMapping
-    public List<Category> findAll() {
+    public List<CategoryDTO> findAll() {
         return categoryService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Category> findById(@PathVariable long id) {
+    public CategoryDTO findById(@PathVariable long id) {
         return categoryService.findById(id);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody @Valid Category category) {
+//    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody @Valid CategoryDTO category) {
         categoryService.create(category);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody @Valid Category category) {
+    public void update(@PathVariable Long id, @RequestBody @Valid CategoryDTO category) {
         categoryService.update(id, category);
     }
 
@@ -48,7 +49,7 @@ public class CategoryRestController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         categoryService.delete(id);
     }
