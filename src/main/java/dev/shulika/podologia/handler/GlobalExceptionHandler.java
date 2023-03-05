@@ -1,6 +1,6 @@
 package dev.shulika.podologia.handler;
 
-import dev.shulika.podologia.dto.APIResponse;
+import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.ErrorDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.exception.ServiceBusinessException;
@@ -20,9 +20,9 @@ import java.util.List;
 public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public APIResponse<?> handleMethodArgumentException(MethodArgumentNotValidException exception) {
+    public ApiResponse<?> handleMethodArgumentException(MethodArgumentNotValidException exception) {
         log.error("IN GlobalExceptionHandler - MethodArgumentNotValidException: {}", exception);
-        APIResponse<?> serviceResponse = new APIResponse<>();
+        ApiResponse<?> serviceResponse = new ApiResponse<>();
         List<ErrorDTO> errors = new ArrayList<>();
         exception.getBindingResult().getFieldErrors()
                 .forEach(error -> {
@@ -34,19 +34,20 @@ public class GlobalExceptionHandler {
         return serviceResponse;
     }
 
-    @ExceptionHandler(ServiceBusinessException.class)
-    public APIResponse<?> handleServiceException(ServiceBusinessException exception) {
-        log.error("IN GlobalExceptionHandler - ServiceBusinessException: {}", exception);
-        APIResponse<?> serviceResponse = new APIResponse<>();
+    @ExceptionHandler(ObjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResponse<?> handleProductNotFoundException(ObjectNotFoundException exception) {
+        log.error("IN GlobalExceptionHandler - ObjectNotFoundException: {}", exception);
+        ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
         serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("", exception.getMessage())));
         return serviceResponse;
     }
 
-    @ExceptionHandler(ObjectNotFoundException.class)
-    public APIResponse<?> handleProductNotFoundException(ObjectNotFoundException exception) {
-        log.error("IN GlobalExceptionHandler - ObjectNotFoundException: {}", exception);
-        APIResponse<?> serviceResponse = new APIResponse<>();
+    @ExceptionHandler(ServiceBusinessException.class)
+    public ApiResponse<?> handleServiceException(ServiceBusinessException exception) {
+        log.error("IN GlobalExceptionHandler - ServiceBusinessException: {}", exception);
+        ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
         serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("", exception.getMessage())));
         return serviceResponse;

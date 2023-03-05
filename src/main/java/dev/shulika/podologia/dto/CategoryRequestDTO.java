@@ -1,14 +1,12 @@
 package dev.shulika.podologia.dto;
 
-import dev.shulika.podologia.model.Category;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryDTO {
+public class CategoryRequestDTO {
     @NotBlank(message = "Category name shouldn't be NULL OR EMPTY")
     private String categoryName;
 

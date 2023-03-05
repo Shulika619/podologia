@@ -1,14 +1,17 @@
-package dev.shulika.podologia.service;
+package dev.shulika.podologia.service.impl;
 
-import dev.shulika.podologia.dto.CategoryDTO;
+import dev.shulika.podologia.dto.CategoryRequestDTO;
+import dev.shulika.podologia.dto.CategoryResponseDTO;
+import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.model.Category;
+import dev.shulika.podologia.service.CategoryService;
 import dev.shulika.podologia.util.CategoryMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.hibernate.mapping.Collection;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dev.shulika.podologia.repository.CategoryRepository;
@@ -16,26 +19,33 @@ import org.springframework.util.ReflectionUtils;
 
 
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<CategoryDTO> findAll() {
-//        return CategoryMapper.toDTO(categoryRepository.findAll());
-        return null;
+    public List<CategoryResponseDTO> findAll() {
+        log.info("IN CategoryServiceImpl - findAll: STARTED");
+        List<Category> categories = categoryRepository.findAll();
+        if(categories.isEmpty())
+            return Collections.emptyList();
+        return categories.stream().map(CategoryMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
-    public CategoryDTO findById(Long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+    public CategoryResponseDTO findById(Long id) {
+        log.info("IN CategoryServiceImpl - findById: STARTED");
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Category not found with id: " + id));
         return CategoryMapper.toDTO(category);
     }
 
@@ -45,12 +55,12 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public void create(CategoryDTO category) {
+    public void create(CategoryRequestDTO category) {
 //        categoryRepository.save(category);
     }
 
     @Override
-    public void update(Long id, CategoryDTO category) {
+    public void update(Long id, CategoryRequestDTO category) {
         categoryRepository.findById(id);                    // TODO: update
     }
 
@@ -63,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService{
                 field.setAccessible(true);
                 ReflectionUtils.setField(field, existingCategory.get(), value);
             });
-           categoryRepository.save(existingCategory.get());
+            categoryRepository.save(existingCategory.get());
         }
 //        return null;
     }
