@@ -89,7 +89,7 @@ public class CategoryServiceImpl implements CategoryService {
             });
             categoryRepository.save(existingCategory.get());
         }
-//        return null;
+        throw new ObjectNotFoundException(id.toString(), "Category not found with id: " + id);
     }
 
     @Override
