@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponseDTO> findAll() {
         log.info("IN CategoryServiceImpl - findAll: STARTED");
         List<Category> categories = categoryRepository.findAll();
-        if(categories.isEmpty())
+        if (categories.isEmpty())
             return Collections.emptyList();
         return categories.stream().map(CategoryMapper::toDTO).collect(Collectors.toList());
     }
@@ -47,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponseDTO findById(Long id) {
         log.info("IN CategoryServiceImpl - findById: STARTED");
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Category not found with id: " + id));
+                .orElseThrow(() -> new ObjectNotFoundException(id.toString(), "Category not found with id: " + id));
         return CategoryMapper.toDTO(category);
     }
 
@@ -58,9 +58,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void create(CategoryRequestDTO categoryRequestDTO) {
-        log.info("IN CategoryServiceImpl - create: STARTED -> CategoryMapper.fromDTO");
-        if(categoryRepository.existsByCategoryName(categoryRequestDTO.getCategoryName()))
-            throw new ServiceBusinessException(categoryRequestDTO.getCategoryName() ,"A category with this name already exists");
+        log.info("IN CategoryServiceImpl - create: STARTED");
+        if (categoryRepository.existsByCategoryName(categoryRequestDTO.getCategoryName()))
+            throw new ServiceBusinessException(categoryRequestDTO.getCategoryName(), "A category with this name already exists");
         categoryRepository.save(CategoryMapper.fromDTO(categoryRequestDTO));
     }
 
@@ -88,8 +88,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void delete(Long id) {
         log.info("IN CategoryServiceImpl - delete: STARTED");
-        if(!categoryRepository.existsById(id))
-            throw new ObjectNotFoundException("Category not found with id: " + id);
+        if (!categoryRepository.existsById(id))
+            throw new ObjectNotFoundException(id.toString(), "Category not found with id: " + id);
         categoryRepository.deleteById(id);
     }
 

@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<?> handleMethodArgumentException(MethodArgumentNotValidException exception) {
-        log.error("IN GlobalExceptionHandler - MethodArgumentNotValidException: {}", exception);
+        log.warn("IN GlobalExceptionHandler - MethodArgumentNotValidException: {}", exception);
         ApiResponse<?> serviceResponse = new ApiResponse<>();
         List<ErrorDTO> errors = new ArrayList<>();
         exception.getBindingResult().getFieldErrors()
@@ -37,16 +37,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiResponse<?> handleProductNotFoundException(ObjectNotFoundException exception) {
-        log.error("IN GlobalExceptionHandler - ObjectNotFoundException: {}", exception);
+        log.warn("IN GlobalExceptionHandler - ObjectNotFoundException: {}", exception);
         ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
-        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("", exception.getMessage())));
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getField(), exception.getMessage())));
         return serviceResponse;
     }
 
     @ExceptionHandler(ServiceBusinessException.class)
     public ApiResponse<?> handleServiceException(ServiceBusinessException exception) {
-        log.error("IN GlobalExceptionHandler - ServiceBusinessException: {}", exception);
+        log.warn("IN GlobalExceptionHandler - ServiceBusinessException: {}", exception);
         ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
         serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getField(), exception.getMessage())));
