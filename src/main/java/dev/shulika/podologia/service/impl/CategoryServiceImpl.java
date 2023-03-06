@@ -65,13 +65,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void update(Long id, CategoryRequestDTO category) {
+    public void update(Long id, CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - update: STARTED");
-        categoryRepository.findById(id);                    // TODO: update
+        Optional<Category> existingCategory = categoryRepository.findById(id);
+        if (!existingCategory.isPresent())
+            throw new ObjectNotFoundException(id.toString(), "Category not found with id: " + id);
+        Category category = existingCategory.get();
+        category.setCategoryName(categoryRequestDTO.getCategoryName());
+        category.setDescription(categoryRequestDTO.getDescription());
+        category.setStatus(categoryRequestDTO.getStatus());
+        categoryRepository.save(category);
     }
 
     @Override
-    public void updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: update status
+    public void updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: add validate
         log.info("IN CategoryServiceImpl - updateCategoryFields: STARTED");
         Optional<Category> existingCategory = categoryRepository.findById(id);
         if (existingCategory.isPresent()) {
@@ -94,7 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
-    // TODO: if need
+    // TODO: delete if dont need
     @Override
     public Optional<Category> findByCategoryName(String name) {
         return Optional.ofNullable(categoryRepository.findByCategoryName(name).orElse(null));

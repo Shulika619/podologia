@@ -63,8 +63,14 @@ public class CategoryRestController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody @Valid CategoryRequestDTO category) {
-        categoryService.update(id, category);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid CategoryRequestDTO categoryRequestDTO) {
+        categoryService.update(id, categoryRequestDTO);
+        ApiResponse<String> responseDTO = ApiResponse
+                .<String>builder()
+                .status("SUCCESS")
+                .results("Category updated")
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
@@ -73,7 +79,6 @@ public class CategoryRestController {
     }
 
     @DeleteMapping("/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> delete(@PathVariable Long id) {
         categoryService.delete(id);
         ApiResponse<String> responseDTO = ApiResponse
