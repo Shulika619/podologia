@@ -52,9 +52,14 @@ public class CategoryRestController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody @Valid CategoryRequestDTO category) {
-        categoryService.create(category);
+    public ResponseEntity<?> create(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO) {
+        categoryService.create(categoryRequestDTO);
+        ApiResponse<String> responseDTO = ApiResponse
+                .<String>builder()
+                .status("SUCCESS")
+                .results("Category created")
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -69,8 +74,14 @@ public class CategoryRestController {
 
     @DeleteMapping("/{id}")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         categoryService.delete(id);
+        ApiResponse<String> responseDTO = ApiResponse
+                .<String>builder()
+                .status("SUCCESS")
+                .results("Category deleted")
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 //    @GetMapping("/{name}")
 //    public Optional<Category> findByName(@PathVariable String name){

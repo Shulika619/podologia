@@ -62,11 +62,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void update(Long id, CategoryRequestDTO category) {
+        log.info("IN CategoryServiceImpl - update: STARTED");
         categoryRepository.findById(id);                    // TODO: update
     }
 
     @Override
     public void updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: update status
+        log.info("IN CategoryServiceImpl - updateCategoryFields: STARTED");
         Optional<Category> existingCategory = categoryRepository.findById(id);
         if (existingCategory.isPresent()) {
             fields.forEach((key, value) -> {
@@ -81,6 +83,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Long id) {
+        log.info("IN CategoryServiceImpl - delete: STARTED");
+        if(!categoryRepository.existsById(id))
+            throw new ObjectNotFoundException("Category not found with id: " + id);
         categoryRepository.deleteById(id);
     }
 
