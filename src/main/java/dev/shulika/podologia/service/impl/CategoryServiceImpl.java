@@ -3,6 +3,7 @@ package dev.shulika.podologia.service.impl;
 import dev.shulika.podologia.dto.CategoryRequestDTO;
 import dev.shulika.podologia.dto.CategoryResponseDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
+import dev.shulika.podologia.exception.ServiceBusinessException;
 import dev.shulika.podologia.model.Category;
 import dev.shulika.podologia.service.CategoryService;
 import dev.shulika.podologia.util.CategoryMapper;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dev.shulika.podologia.repository.CategoryRepository;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 import java.lang.reflect.Field;
@@ -57,6 +59,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void create(CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - create: STARTED -> CategoryMapper.fromDTO");
+        if(categoryRepository.existsByCategoryName(categoryRequestDTO.getCategoryName()))
+            throw new ServiceBusinessException(categoryRequestDTO.getCategoryName() ,"A category with this name already exists");
         categoryRepository.save(CategoryMapper.fromDTO(categoryRequestDTO));
     }
 

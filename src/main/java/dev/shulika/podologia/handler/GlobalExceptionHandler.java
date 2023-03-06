@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
         log.error("IN GlobalExceptionHandler - ServiceBusinessException: {}", exception);
         ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
-        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("", exception.getMessage())));
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getField(), exception.getMessage())));
         return serviceResponse;
     }
 }
