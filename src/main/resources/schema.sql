@@ -20,9 +20,21 @@ create table Procedure
     id                     int primary key generated ALWAYS AS IDENTITY,
     id_category            int references Category (id),
     procedure_name         varchar(255) not null unique,
-    podolog_expert_price   int          not null,
     podolog_expert_minutes int          not null,
-    podolog_price          int          not null,
+    podolog_expert_price   int          not null,
     podolog_minutes        int          not null,
+    podolog_price          int          not null,
     is_active              bool         not null default true
 );
+
+INSERT INTO Procedure(id_category, procedure_name, podolog_expert_minutes, podolog_expert_price, podolog_minutes, podolog_price, is_active)
+VALUES (1, 'Консультация (заведение карты, расписание терапии, сбор анализа, фото до)', 30, 700, 30, 500, true);
+
+INSERT INTO Procedure(id_category, procedure_name, podolog_expert_minutes, podolog_expert_price, podolog_minutes, podolog_price, is_active)
+VALUES (1, 'Педикюр сложный (натоптыши, трещины, мозоли до 5шт, онихофогрифоз 7-10 ногдей врастающие ногти 1-2 стадии(боль, легкое покраснение))', 90, 2300, 120, 2000, true);
+
+INSERT INTO Procedure(id_category, procedure_name, podolog_expert_minutes, podolog_expert_price, podolog_minutes, podolog_price, is_active)
+VALUES (1, 'Педикюр пальцев сложный (внутренние мозоли, пустоты, утолщения, микоз)', 60, 1150, 60, 1000, true);
+
+INSERT INTO Procedure(id_category, procedure_name, podolog_expert_minutes, podolog_expert_price, podolog_minutes, podolog_price, is_active)
+VALUES (1, 'Test procedure', 0, 0, 0, 0, false);
