@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import dev.shulika.podologia.service.impl.CategoryServiceImpl;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -62,7 +61,7 @@ public class CategoryRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Category updated")
+                .results("Category updated (PUT)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -73,7 +72,7 @@ public class CategoryRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Category updated")
+                .results("Category updated (PATCH)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

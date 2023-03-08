@@ -103,7 +103,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
-    // TODO: delete if dont need
+    // TODO: late delete if dont need
     @Override
     public Optional<Category> findByCategoryName(String name) {
         return Optional.ofNullable(categoryRepository.findByCategoryName(name).orElse(null));
