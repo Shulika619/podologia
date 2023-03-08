@@ -10,7 +10,7 @@ public class CategoryMapper {
         categoryRequestDTO.setId(category.getId());
         categoryRequestDTO.setCategoryName(category.getCategoryName());
         categoryRequestDTO.setDescription(category.getDescription());
-        categoryRequestDTO.setStatus(category.getStatus());
+        categoryRequestDTO.setIsActive(category.getIsActive());
         return categoryRequestDTO;
     }
 
@@ -18,7 +18,7 @@ public class CategoryMapper {
         Category category = new Category();
         category.setCategoryName(categoryRequestDTO.getCategoryName());
         category.setDescription(categoryRequestDTO.getDescription());
-        category.setStatus(categoryRequestDTO.getStatus());
+        category.setIsActive(categoryRequestDTO.getIsActive());
         return category;
     }
 }

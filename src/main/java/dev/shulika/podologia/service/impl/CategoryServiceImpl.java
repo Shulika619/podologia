@@ -72,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = existingCategory.get();
         category.setCategoryName(categoryRequestDTO.getCategoryName());
         category.setDescription(categoryRequestDTO.getDescription());
-        category.setStatus(categoryRequestDTO.getStatus());
+        category.setIsActive(categoryRequestDTO.getIsActive());
         categoryRepository.save(category);
         log.info("IN CategoryServiceImpl - update category by id: {} - FINISHED SUCCESSFULLY", id);
     }
@@ -81,16 +81,16 @@ public class CategoryServiceImpl implements CategoryService {
     public void updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: add validate
         log.info("IN CategoryServiceImpl - updateCategoryFields: STARTED");
         Optional<Category> existingCategory = categoryRepository.findById(id);
-        if (existingCategory.isPresent()) {
-            fields.forEach((key, value) -> {
-                Field field = ReflectionUtils.findField(Category.class, key);
-                field.setAccessible(true);
-                ReflectionUtils.setField(field, existingCategory.get(), value);
-            });
-            categoryRepository.save(existingCategory.get());
-            log.info("IN CategoryServiceImpl - updateCategoryFields - FINISHED SUCCESSFULLY");
+        if (!existingCategory.isPresent()) {
+            throw new ObjectNotFoundException(id.toString(), "Category not found with id: " + id);
         }
-        throw new ObjectNotFoundException(id.toString(), "Category not found with id: " + id);
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Category.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, existingCategory.get(), value);
+        });
+        categoryRepository.save(existingCategory.get());
+        log.info("IN CategoryServiceImpl - updateCategoryFields - FINISHED SUCCESSFULLY");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dev.shulika.podologia.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,5 +15,6 @@ public class CategoryRequestDTO {
 
     private String description;
 
-    private String status;
+    @NotNull(message = "Category field isActive must be bool and not null")
+    private Boolean isActive;
 }

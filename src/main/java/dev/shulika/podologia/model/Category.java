@@ -21,8 +21,6 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "status")
-    private String status;
-//    status varchar(20) default 'ACTIVE'
-
+    @Column(name = "is_active")
+    private Boolean isActive;
 }
