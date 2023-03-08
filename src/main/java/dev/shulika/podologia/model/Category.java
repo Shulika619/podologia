@@ -21,7 +21,6 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-//    @Enumerated(EnumType.STRING)  //TODO: ENUM status in model
     @Column(name = "status")
     private String status;
 //    status varchar(20) default 'ACTIVE'

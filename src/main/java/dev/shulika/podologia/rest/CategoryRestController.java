@@ -5,10 +5,7 @@ import dev.shulika.podologia.dto.CategoryRequestDTO;
 import dev.shulika.podologia.dto.CategoryResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.cglib.core.Local;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +19,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/categories")
 @RequiredArgsConstructor
-@Slf4j
 public class CategoryRestController {
     private final CategoryServiceImpl categoryService;
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        log.info("IN CategoryRestController - findAll");
         List<CategoryResponseDTO> categories = categoryService.findAll();
         ApiResponse<List<CategoryResponseDTO>> responseDTO = ApiResponse
                 .<List<CategoryResponseDTO>>builder()
@@ -41,7 +36,6 @@ public class CategoryRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id) {
-        log.info("IN CategoryRestController - findById: {}", id);
         CategoryResponseDTO categoryResponseDTO = categoryService.findById(id);
         ApiResponse<CategoryResponseDTO> responseDTO = ApiResponse
                 .<CategoryResponseDTO>builder()
