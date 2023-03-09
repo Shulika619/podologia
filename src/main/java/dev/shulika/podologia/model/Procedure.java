@@ -14,11 +14,12 @@ public class Procedure {
     @Column(name = "id")
     private Long id;
 
+    //TODO: relation
     @OneToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @Column(name = "procedure_name")
+    @Column(name = "name")
     private String procedureName;
 
     @Column(name = "podolog_expert_minutes")
@@ -32,5 +33,8 @@ public class Procedure {
 
     @Column(name = "podolog_price")
     private Integer podologPrice;
+
+    @Column(name = "enabled")
+    private Boolean enabled;
 
 }

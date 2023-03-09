@@ -13,14 +13,10 @@ import lombok.NoArgsConstructor;
 public class ProcedureResponseDTO {
     private Long id;
     private Category category;
-
     private String procedureName;
-
     private Integer podologExpertMinutes;
-
     private Integer podologExpertPrice;
-
     private Integer podologMinutes;
-
     private Integer podologPrice;
+    private Boolean enabled;
 }
