@@ -39,7 +39,6 @@ public class ProcedureServiceImpl implements ProcedureService {
         return procedures.stream().map(ProcedureMapper::toDTO).collect(Collectors.toList());
     }
 
-
     @Override
     public ProcedureResponseDTO findById(Long id) {
         log.info("IN ProcedureServiceImpl - findById: {} - STARTED", id);

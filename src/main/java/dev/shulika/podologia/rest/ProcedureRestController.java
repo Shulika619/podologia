@@ -1,4 +1,5 @@
 package dev.shulika.podologia.rest;
+
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.ProcedureRequestDTO;
 import dev.shulika.podologia.dto.ProcedureResponseDTO;
@@ -29,6 +30,7 @@ public class ProcedureRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id) {
         ProcedureResponseDTO procedureResponseDTO = procedureService.findById(id);
@@ -39,6 +41,7 @@ public class ProcedureRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid ProcedureRequestDTO procedureRequestDTO) {
         procedureService.create(procedureRequestDTO);
@@ -60,6 +63,7 @@ public class ProcedureRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateProcedureFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         procedureService.updateProcedureFields(id, fields);
@@ -70,6 +74,7 @@ public class ProcedureRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         procedureService.delete(id);
