@@ -14,13 +14,11 @@ public class Procedure {
     @Column(name = "id")
     private Long id;
 
-    //TODO: relation
-    @OneToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category category;
+    @Column(name = "category_id")
+    private Long categoryId;
 
     @Column(name = "name")
-    private String procedureName;
+    private String name;
 
     @Column(name = "podolog_expert_minutes")
     private Integer podologExpertMinutes;

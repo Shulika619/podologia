@@ -1,7 +1,6 @@
 package dev.shulika.podologia.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import dev.shulika.podologia.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,8 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProcedureResponseDTO {
     private Long id;
-    private Category category;
-    private String procedureName;
+    private Long categoryId;
+    private String name;
     private Integer podologExpertMinutes;
     private Integer podologExpertPrice;
     private Integer podologMinutes;
