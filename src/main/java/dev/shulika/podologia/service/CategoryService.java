@@ -11,14 +11,10 @@ import java.util.Optional;
 public interface CategoryService {
     List<CategoryResponseDTO> findAll();
     CategoryResponseDTO findById(Long id);
-    Boolean existsById(Long id);
 
     void create(CategoryRequestDTO category);
 
     void update(Long id, CategoryRequestDTO category);
     void updateCategoryFields(Long id, Map<String, Object> fields);
     void delete(Long id);
-
-    Optional<Category> findByCategoryName(String name);
-    Boolean existsByCategoryName(String name);
 }
