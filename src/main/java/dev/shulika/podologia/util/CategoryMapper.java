@@ -8,17 +8,17 @@ public class CategoryMapper {
     public static CategoryResponseDTO toDTO(Category category){
         CategoryResponseDTO categoryRequestDTO = new CategoryResponseDTO();
         categoryRequestDTO.setId(category.getId());
-        categoryRequestDTO.setCategoryName(category.getCategoryName());
+        categoryRequestDTO.setName(category.getName());
         categoryRequestDTO.setDescription(category.getDescription());
-        categoryRequestDTO.setIsActive(category.getIsActive());
+        categoryRequestDTO.setEnabled(category.getEnabled());
         return categoryRequestDTO;
     }
 
     public static Category fromDTO(CategoryRequestDTO categoryRequestDTO){
         Category category = new Category();
-        category.setCategoryName(categoryRequestDTO.getCategoryName());
+        category.setName(categoryRequestDTO.getName());
         category.setDescription(categoryRequestDTO.getDescription());
-        category.setIsActive(categoryRequestDTO.getIsActive());
+        category.setEnabled(categoryRequestDTO.getEnabled());
         return category;
     }
 }

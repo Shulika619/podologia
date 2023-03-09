@@ -49,16 +49,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Boolean existsById(Long id) {
-        log.info("IN CategoryServiceImpl - existsById: {}", id);
-        return categoryRepository.existsById(id);
-    }
-
-    @Override
     public void create(CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - create: STARTED");
-        if (categoryRepository.existsByCategoryName(categoryRequestDTO.getCategoryName()))
-            throw new ServiceBusinessException(categoryRequestDTO.getCategoryName(), "A category with this name already exists");
+        if (categoryRepository.existsByName(categoryRequestDTO.getName()))
+            throw new ServiceBusinessException(categoryRequestDTO.getName(), "A category with this name already exists");
         categoryRepository.save(CategoryMapper.fromDTO(categoryRequestDTO));
         log.info("IN CategoryServiceImpl - created - FINISHED SUCCESSFULLY");
     }
@@ -70,9 +64,9 @@ public class CategoryServiceImpl implements CategoryService {
         if (!existingCategory.isPresent())
             throw new ObjectNotFoundException(id.toString(), "Category not found with id: " + id);
         Category category = existingCategory.get();
-        category.setCategoryName(categoryRequestDTO.getCategoryName());
+        category.setName(categoryRequestDTO.getName());
         category.setDescription(categoryRequestDTO.getDescription());
-        category.setIsActive(categoryRequestDTO.getIsActive());
+        category.setEnabled(categoryRequestDTO.getEnabled());
         categoryRepository.save(category);
         log.info("IN CategoryServiceImpl - update category by id: {} - FINISHED SUCCESSFULLY", id);
     }
@@ -100,17 +94,5 @@ public class CategoryServiceImpl implements CategoryService {
             throw new ObjectNotFoundException(id.toString(), "Category not found with id: " + id);
         categoryRepository.deleteById(id);
         log.info("IN CategoryServiceImpl - delete by id: {} - FINISHED SUCCESSFULLY", id);
-    }
-
-
-    // TODO: late delete if dont need
-    @Override
-    public Optional<Category> findByCategoryName(String name) {
-        return Optional.ofNullable(categoryRepository.findByCategoryName(name).orElse(null));
-    }
-
-    @Override
-    public Boolean existsByCategoryName(String name) {
-        return categoryRepository.existsByCategoryName(name);
     }
 }
