@@ -11,10 +11,10 @@ import lombok.Setter;
 public class CategoryRequestDTO {
     @NotBlank(message = "Category name shouldn't be NULL OR EMPTY")
     @Size(min = 3, max = 65,message = "Category name must be between 3 and 65 characters")
-    private String categoryName;
+    private String name;
 
     private String description;
 
-    @NotNull(message = "Category field isActive must be bool and not null")
-    private Boolean isActive;
+    @NotNull(message = "Category field 'enabled' must be bool and not null")
+    private Boolean enabled;
 }

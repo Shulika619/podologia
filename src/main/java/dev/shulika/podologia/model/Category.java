@@ -15,12 +15,12 @@ public class Category {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "category_name", nullable = false, unique = true)
-    private String categoryName;
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(name = "enabled")
+    private Boolean enabled;
 }

@@ -9,7 +9,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategoryResponseDTO {
     private Long id;
-    private String categoryName;
+    private String name;
     private String description;
-    private Boolean isActive;
+    private Boolean enabled;
 }
