@@ -66,10 +66,6 @@ public class ProcedureServiceImpl implements ProcedureService {
         Procedure procedure = existingProcedure.get();
         procedure.setCategoryId(procedureRequestDTO.getCategoryId());
         procedure.setName(procedureRequestDTO.getName());
-        procedure.setPodologExpertMinutes(procedureRequestDTO.getPodologExpertMinutes());
-        procedure.setPodologExpertPrice(procedureRequestDTO.getPodologExpertPrice());
-        procedure.setPodologMinutes(procedureRequestDTO.getPodologMinutes());
-        procedure.setPodologPrice(procedureRequestDTO.getPodologPrice());
         procedure.setEnabled(procedureRequestDTO.getEnabled());
         procedureRepository.save(procedure);
         log.info("IN ProcedureServiceImpl - update procedure by id: {} - FINISHED SUCCESSFULLY", id);

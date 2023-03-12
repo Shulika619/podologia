@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProcedureResponseDTO {
+public class SpecialistResponseDTO {
     private Long id;
-    private Long categoryId;
     private String name;
+    private String description;
     private Boolean enabled;
 }
