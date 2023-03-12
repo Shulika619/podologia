@@ -20,18 +20,6 @@ public class Procedure {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "podolog_expert_minutes")
-    private Integer podologExpertMinutes;
-
-    @Column(name = "podolog_expert_price")
-    private Integer podologExpertPrice;
-
-    @Column(name = "podolog_minutes")
-    private Integer podologMinutes;
-
-    @Column(name = "podolog_price")
-    private Integer podologPrice;
-
     @Column(name = "enabled")
     private Boolean enabled;
 
