@@ -33,7 +33,7 @@ VALUES (1, 'Педикюр пальцев сложный (внутренние �
 
 INSERT INTO Procedure(category_id, name, enabled)
 VALUES (1, 'Test procedure', false);
-------
+--
 create table Specialist
 (
     id          int primary key generated ALWAYS AS IDENTITY,
@@ -49,8 +49,8 @@ VALUES ('Подолог', '', true);
 
 INSERT INTO Specialist(name, description, enabled)
 VALUES ('Практик подолог', '', false);
----
-create table Procedure_price
+--
+create table Price
 (
     id            int primary key generated ALWAYS AS IDENTITY,
     procedure_id  int references Procedure (id),
@@ -58,15 +58,16 @@ create table Procedure_price
     minutes       int not null,
     price         int not null
 );
-INSERT INTO Procedure_price(procedure_id, specialist_id, minutes, price)
+INSERT INTO Price(procedure_id, specialist_id, minutes, price)
 VALUES (1, 1, 30, 700);
 
-INSERT INTO Procedure_price(procedure_id, specialist_id, minutes, price)
+INSERT INTO Price(procedure_id, specialist_id, minutes, price)
 VALUES (1, 2, 30, 500);
 
-INSERT INTO Procedure_price(procedure_id, specialist_id, minutes, price)
+INSERT INTO Price(procedure_id, specialist_id, minutes, price)
 VALUES (2, 1, 90, 3000);
 
-INSERT INTO Procedure_price(procedure_id, specialist_id, minutes, price)
+INSERT INTO Price(procedure_id, specialist_id, minutes, price)
 VALUES (2, 2, 120, 2500);
+
 -- -----------------------------
