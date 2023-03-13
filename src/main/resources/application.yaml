@@ -18,15 +18,12 @@ spring:
     password: 1234
     initialize: true
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
       ddl-auto: none
   liquibase:
     enabled: true
-#  sql:
-#    init:
-#      mode: always
-#      encoding: UTF-8
 
 logging:
   level:
