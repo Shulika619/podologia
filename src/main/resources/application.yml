@@ -1,0 +1,37 @@
+server:
+  address: localhost
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+      force-request: true
+      force-response: true
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/podologia_db?useUnicode=true&characterEncoding=UTF-8
+    username: postgres
+    password: 1234
+    initialize: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+#  sql:
+#    init:
+#      mode: always
+#      encoding: UTF-8
+
+#  main:
+#    banner-mode: off
+#
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: DEBUG
+
