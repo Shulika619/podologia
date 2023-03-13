@@ -2,6 +2,9 @@ package dev.shulika.podologia.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "Price")
@@ -27,4 +30,11 @@ public class Price {
     @Column(name = "price")
     private Integer price;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "updated_at")
+    private Date updatedAt;
 }

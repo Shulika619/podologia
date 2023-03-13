@@ -10,6 +10,7 @@ import dev.shulika.podologia.service.ProcedureService;
 import dev.shulika.podologia.util.ProcedureMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
@@ -30,6 +31,7 @@ public class ProcedureServiceImpl implements ProcedureService {
     private final ProcedureRepository procedureRepository;
 
     @Override
+    @Cacheable("procedures")
     public List<ProcedureResponseDTO> findAll() {
         log.info("IN ProcedureServiceImpl - findAll - STARTED");
         List<Procedure> procedures = procedureRepository.findAll();
