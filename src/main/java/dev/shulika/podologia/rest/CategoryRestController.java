@@ -27,7 +27,7 @@ public class CategoryRestController {
         ApiResponse<List<CategoryResponseDTO>> responseDTO = ApiResponse
                 .<List<CategoryResponseDTO>>builder()
                 .status("SUCCESS")
-                .results(categories)
+                .data(categories)
                 .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
@@ -39,7 +39,7 @@ public class CategoryRestController {
         ApiResponse<CategoryResponseDTO> responseDTO = ApiResponse
                 .<CategoryResponseDTO>builder()
                 .status("SUCCESS")
-                .results(categoryResponseDTO)
+                .data(categoryResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -50,7 +50,7 @@ public class CategoryRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Category created")
+                .data("Category created")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
@@ -61,7 +61,7 @@ public class CategoryRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Category updated (PUT)")
+                .data("Category updated (PUT)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -72,7 +72,7 @@ public class CategoryRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Category updated (PATCH)")
+                .data("Category updated (PATCH)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -83,7 +83,7 @@ public class CategoryRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Category deleted")
+                .data("Category deleted")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

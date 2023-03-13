@@ -25,7 +25,7 @@ public class SpecialistRestController {
         ApiResponse<List<SpecialistResponseDTO>> responseDTO = ApiResponse
                 .<List<SpecialistResponseDTO>>builder()
                 .status("SUCCESS")
-                .results(specialists)
+                .data(specialists)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -36,7 +36,7 @@ public class SpecialistRestController {
         ApiResponse<SpecialistResponseDTO> responseDTO = ApiResponse
                 .<SpecialistResponseDTO>builder()
                 .status("SUCCESS")
-                .results(specialistResponseDTO)
+                .data(specialistResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -47,7 +47,7 @@ public class SpecialistRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Specialist created")
+                .data("Specialist created")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
@@ -58,7 +58,7 @@ public class SpecialistRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Specialist updated (PUT)")
+                .data("Specialist updated (PUT)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -69,7 +69,7 @@ public class SpecialistRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Specialist updated (PATCH)")
+                .data("Specialist updated (PATCH)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -80,7 +80,7 @@ public class SpecialistRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Specialist deleted")
+                .data("Specialist deleted")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

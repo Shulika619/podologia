@@ -26,7 +26,7 @@ public class ProcedureRestController {
         ApiResponse<List<ProcedureResponseDTO>> responseDTO = ApiResponse
                 .<List<ProcedureResponseDTO>>builder()
                 .status("SUCCESS")
-                .results(procedures)
+                .data(procedures)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -37,7 +37,7 @@ public class ProcedureRestController {
         ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
                 .<ProcedureResponseDTO>builder()
                 .status("SUCCESS")
-                .results(procedureResponseDTO)
+                .data(procedureResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -48,7 +48,7 @@ public class ProcedureRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Procedure created")
+                .data("Procedure created")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
@@ -59,7 +59,7 @@ public class ProcedureRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Procedure updated (PUT)")
+                .data("Procedure updated (PUT)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -70,7 +70,7 @@ public class ProcedureRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Procedure updated (PATCH)")
+                .data("Procedure updated (PATCH)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -81,7 +81,7 @@ public class ProcedureRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .results("Procedure deleted")
+                .data("Procedure deleted")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
