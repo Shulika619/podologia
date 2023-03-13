@@ -21,10 +21,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
-  sql:
-    init:
-      mode: always
-      encoding: UTF-8
+  liquibase:
+    enabled: true
+#  sql:
+#    init:
+#      mode: always
+#      encoding: UTF-8
 
 logging:
   level:

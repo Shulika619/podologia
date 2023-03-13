@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset shulika:1
 CREATE TABLE IF NOT EXISTS Category
 (
     id          int primary key generated ALWAYS AS IDENTITY,
@@ -7,7 +9,9 @@ CREATE TABLE IF NOT EXISTS Category
     created_at  timestamp           not null default CURRENT_TIMESTAMP,
     updated_at  timestamp           not null default CURRENT_TIMESTAMP
 );
--- -----------------------------
+--rollback DROP TABLE category;
+
+--changeset shulika:2
 CREATE TABLE IF NOT EXISTS Procedure
 (
     id          int primary key generated ALWAYS AS IDENTITY,
@@ -17,7 +21,9 @@ CREATE TABLE IF NOT EXISTS Procedure
     created_at  timestamp    not null default CURRENT_TIMESTAMP,
     updated_at  timestamp    not null default CURRENT_TIMESTAMP
 );
--- -----------------------------
+--rollback DROP TABLE procedure;
+
+--changeset shulika:3
 CREATE TABLE IF NOT EXISTS Specialist
 (
     id          int primary key generated ALWAYS AS IDENTITY,
@@ -27,7 +33,9 @@ CREATE TABLE IF NOT EXISTS Specialist
     created_at  timestamp    not null default CURRENT_TIMESTAMP,
     updated_at  timestamp    not null default CURRENT_TIMESTAMP
 );
--- -----------------------------
+--rollback DROP TABLE specialist;
+
+--changeset shulika:4
 CREATE TABLE IF NOT EXISTS Price
 (
     id            int primary key generated ALWAYS AS IDENTITY,
@@ -38,4 +46,4 @@ CREATE TABLE IF NOT EXISTS Price
     created_at    timestamp not null default CURRENT_TIMESTAMP,
     updated_at    timestamp not null default CURRENT_TIMESTAMP
 );
--- -----------------------------
+--rollback DROP TABLE price;
