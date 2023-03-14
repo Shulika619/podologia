@@ -2,7 +2,8 @@ package dev.shulika.podologia.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
@@ -30,10 +31,12 @@ public class Price {
     @Column(name = "price")
     private Integer price;
 
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
 
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
