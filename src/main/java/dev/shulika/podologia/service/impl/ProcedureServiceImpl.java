@@ -5,6 +5,7 @@ import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.exception.ServiceBusinessException;
 import dev.shulika.podologia.model.Procedure;
+import dev.shulika.podologia.repository.CategoryRepository;
 import dev.shulika.podologia.repository.ProcedureRepository;
 import dev.shulika.podologia.service.ProcedureService;
 import dev.shulika.podologia.util.ProcedureMapper;
@@ -29,6 +30,8 @@ import java.util.stream.Collectors;
 public class ProcedureServiceImpl implements ProcedureService {
 
     private final ProcedureRepository procedureRepository;
+    private final CategoryRepository categoryRepository;
+
 
     @Override
     @Cacheable("procedures")
@@ -55,6 +58,8 @@ public class ProcedureServiceImpl implements ProcedureService {
         log.info("IN ProcedureServiceImpl - create: STARTED");
         if (procedureRepository.existsByName(procedureRequestDTO.getName()))
             throw new ServiceBusinessException(procedureRequestDTO.getName(), "A procedure with this name already exists");
+        if (!categoryRepository.existsById(procedureRequestDTO.getCategoryId()))
+            throw new ObjectNotFoundException(procedureRequestDTO.getCategoryId().toString(), "Category id does not exist");
         procedureRepository.save(ProcedureMapper.fromDTO(procedureRequestDTO));
         log.info("IN ProcedureServiceImpl - created - FINISHED SUCCESSFULLY");
     }
