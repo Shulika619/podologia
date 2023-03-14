@@ -1,12 +1,10 @@
 package dev.shulika.podologia.service;
 
-import dev.shulika.podologia.dto.CategoryRequestDTO;
-import dev.shulika.podologia.dto.CategoryResponseDTO;
-import dev.shulika.podologia.model.Category;
+import dev.shulika.podologia.dto.category.CategoryRequestDTO;
+import dev.shulika.podologia.dto.category.CategoryResponseDTO;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface CategoryService {
     List<CategoryResponseDTO> findAll();

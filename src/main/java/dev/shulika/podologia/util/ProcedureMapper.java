@@ -1,6 +1,6 @@
 package dev.shulika.podologia.util;
-import dev.shulika.podologia.dto.ProcedureRequestDTO;
-import dev.shulika.podologia.dto.ProcedureResponseDTO;
+import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
+import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
 import dev.shulika.podologia.model.Procedure;
 import lombok.RequiredArgsConstructor;
 

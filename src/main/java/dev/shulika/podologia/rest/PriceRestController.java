@@ -2,43 +2,89 @@ package dev.shulika.podologia.rest;
 
 
 import dev.shulika.podologia.dto.ApiResponse;
-import dev.shulika.podologia.dto.ProcedureRequestDTO;
-import dev.shulika.podologia.model.Price;
-import dev.shulika.podologia.repository.PriceRepository;
+import dev.shulika.podologia.dto.price.PriceRequestDTO;
+import dev.shulika.podologia.dto.price.PriceResponseDTO;
+import dev.shulika.podologia.service.impl.PriceServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/v1/prices")
 @RequiredArgsConstructor
 public class PriceRestController {
-    private final PriceRepository priceRepository;
+    private final PriceServiceImpl priceService;
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        return new ResponseEntity<>(priceRepository.findAll(), HttpStatus.OK);
+        List<PriceResponseDTO> prices = priceService.findAll();
+        ApiResponse<List<PriceResponseDTO>> responseDTO = ApiResponse
+                .<List<PriceResponseDTO>>builder()
+                .status("SUCCESS")
+                .data(prices)
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id) {
-            return new ResponseEntity<>(priceRepository.findById(id), HttpStatus.OK);
+        PriceResponseDTO priceResponseDTO = priceService.findById(id);
+        ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
+                .<PriceResponseDTO>builder()
+                .status("SUCCESS")
+                .data(priceResponseDTO)
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid Price price) {
-        return new ResponseEntity<>(priceRepository.save(price), HttpStatus.CREATED);
+    public ResponseEntity<?> create(@RequestBody @Valid PriceRequestDTO priceRequestDTO) {
+        priceService.create(priceRequestDTO);
+        ApiResponse<String> responseDTO = ApiResponse
+                .<String>builder()
+                .status("SUCCESS")
+                .data("Price created")
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid Price price) {
-        return new ResponseEntity<>(priceRepository.save(price), HttpStatus.OK);
-    }
+//
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid SpecialistRequestDTO specialistRequestDTO) {
+//        specialistService.update(id, specialistRequestDTO);
+//        ApiResponse<String> responseDTO = ApiResponse
+//                .<String>builder()
+//                .status("SUCCESS")
+//                .data("Specialist updated (PUT)")
+//                .build();
+//        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+//    }
+//
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<?> updateSpecialistFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+//        specialistService.updateSpecialistFields(id, fields);
+//        ApiResponse<String> responseDTO = ApiResponse
+//                .<String>builder()
+//                .status("SUCCESS")
+//                .data("Specialist updated (PATCH)")
+//                .build();
+//        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+//    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        priceRepository.deleteById(id);
-        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        priceService.delete(id);
+        ApiResponse<String> responseDTO = ApiResponse
+                .<String>builder()
+                .status("SUCCESS")
+                .data("Price deleted")
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
 }

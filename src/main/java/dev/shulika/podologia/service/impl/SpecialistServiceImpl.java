@@ -1,7 +1,7 @@
 package dev.shulika.podologia.service.impl;
 
-import dev.shulika.podologia.dto.SpecialistRequestDTO;
-import dev.shulika.podologia.dto.SpecialistResponseDTO;
+import dev.shulika.podologia.dto.specialist.SpecialistRequestDTO;
+import dev.shulika.podologia.dto.specialist.SpecialistResponseDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.exception.ServiceBusinessException;
 import dev.shulika.podologia.model.Specialist;

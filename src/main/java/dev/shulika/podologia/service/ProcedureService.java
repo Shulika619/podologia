@@ -1,7 +1,7 @@
 package dev.shulika.podologia.service;
 
-import dev.shulika.podologia.dto.ProcedureRequestDTO;
-import dev.shulika.podologia.dto.ProcedureResponseDTO;
+import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
+import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
 
 import java.util.List;
 import java.util.Map;

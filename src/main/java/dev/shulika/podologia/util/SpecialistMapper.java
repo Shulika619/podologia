@@ -1,6 +1,6 @@
 package dev.shulika.podologia.util;
-import dev.shulika.podologia.dto.SpecialistRequestDTO;
-import dev.shulika.podologia.dto.SpecialistResponseDTO;
+import dev.shulika.podologia.dto.specialist.SpecialistRequestDTO;
+import dev.shulika.podologia.dto.specialist.SpecialistResponseDTO;
 import dev.shulika.podologia.model.Specialist;
 import lombok.RequiredArgsConstructor;
 

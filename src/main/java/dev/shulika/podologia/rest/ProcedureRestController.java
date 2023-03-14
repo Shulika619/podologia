@@ -1,8 +1,8 @@
 package dev.shulika.podologia.rest;
 
 import dev.shulika.podologia.dto.ApiResponse;
-import dev.shulika.podologia.dto.ProcedureRequestDTO;
-import dev.shulika.podologia.dto.ProcedureResponseDTO;
+import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
+import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
 import dev.shulika.podologia.service.impl.ProcedureServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

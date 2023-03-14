@@ -1,4 +1,4 @@
-package dev.shulika.podologia.dto;
+package dev.shulika.podologia.dto.procedure;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
