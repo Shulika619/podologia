@@ -57,7 +57,7 @@ public class PriceRestController {
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")
-                .data("Specialist updated (PUT)")
+                .data("Price updated (PUT)")
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
