@@ -1,6 +1,5 @@
 package dev.shulika.podologia.rest;
 
-
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.price.PriceRequestDTO;
 import dev.shulika.podologia.dto.price.PriceResponseDTO;
@@ -12,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-
 
 @RestController
 @RequestMapping("/api/v1/prices")
@@ -53,28 +50,17 @@ public class PriceRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid SpecialistRequestDTO specialistRequestDTO) {
-//        specialistService.update(id, specialistRequestDTO);
-//        ApiResponse<String> responseDTO = ApiResponse
-//                .<String>builder()
-//                .status("SUCCESS")
-//                .data("Specialist updated (PUT)")
-//                .build();
-//        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-//    }
-//
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<?> updateSpecialistFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-//        specialistService.updateSpecialistFields(id, fields);
-//        ApiResponse<String> responseDTO = ApiResponse
-//                .<String>builder()
-//                .status("SUCCESS")
-//                .data("Specialist updated (PATCH)")
-//                .build();
-//        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-//    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PriceRequestDTO priceRequestDTO) {
+        priceService.update(id, priceRequestDTO);
+        ApiResponse<String> responseDTO = ApiResponse
+                .<String>builder()
+                .status("SUCCESS")
+                .data("Specialist updated (PUT)")
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {

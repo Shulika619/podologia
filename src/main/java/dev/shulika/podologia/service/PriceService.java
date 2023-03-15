@@ -15,7 +15,5 @@ public interface PriceService {
 
     void update(Long id, PriceRequestDTO category);
 
-    void updateFields(Long id, Map<String, Object> fields);
-
     void delete(Long id);
 }
