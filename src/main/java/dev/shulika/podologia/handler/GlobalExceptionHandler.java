@@ -5,6 +5,8 @@ import dev.shulika.podologia.dto.ErrorDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.exception.ServiceBusinessException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.TransientPropertyValueException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,6 +52,22 @@ public class GlobalExceptionHandler {
         ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
         serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getField(), exception.getMessage())));
+        return serviceResponse;
+    }
+    @ExceptionHandler(TransientPropertyValueException.class)
+    public ApiResponse<?> handleTransientPropertyValueException(TransientPropertyValueException exception) {
+        log.warn("IN GlobalExceptionHandler - TransientPropertyValueException: {}", exception);
+        ApiResponse<?> serviceResponse = new ApiResponse<>();
+        serviceResponse.setStatus("FAILED");
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getPropertyName(), "Read the API documentation and check request data")));
+        return serviceResponse;
+    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ApiResponse<?> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
+        log.warn("IN GlobalExceptionHandler - DataIntegrityViolationException: {}", exception);
+        ApiResponse<?> serviceResponse = new ApiResponse<>();
+        serviceResponse.setStatus("FAILED");
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getMostSpecificCause().toString(), exception.getMessage())));
         return serviceResponse;
     }
 }
