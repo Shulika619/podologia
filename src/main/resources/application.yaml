@@ -25,6 +25,11 @@ spring:
   liquibase:
     enabled: true
 
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+
 logging:
   level:
     org:
