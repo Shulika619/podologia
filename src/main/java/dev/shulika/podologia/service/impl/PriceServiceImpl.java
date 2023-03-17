@@ -26,7 +26,7 @@ import java.util.Optional;
 public class PriceServiceImpl implements PriceService {
     private final PriceRepository priceRepository;
 
-    @Cacheable(value="prices", key = "#pageable")
+    @Cacheable(value = "prices", key = "#pageable")
     @Override
     public Page<PriceResponseDTO> findAllByPage(Pageable pageable) {
         log.info("IN PriceServiceImpl - findAll - STARTED");
