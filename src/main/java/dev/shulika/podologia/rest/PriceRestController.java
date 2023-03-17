@@ -30,7 +30,7 @@ public class PriceRestController {
                 .data(prices.getContent())
                 .totalElements(prices.getTotalElements())
                 .perPage(prices.getSize())
-                .currentPage(prices.getNumber()+1)
+                .currentPage(prices.getNumber())
                 .totalPages(prices.getTotalPages())
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
