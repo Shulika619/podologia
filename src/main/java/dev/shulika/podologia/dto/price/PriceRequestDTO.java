@@ -18,4 +18,6 @@ public class PriceRequestDTO {
     private Integer minutes;
     @Range(min = 0, max = 50000, message = "Procedure price bust be between 0 and 50000")
     private Integer price;
+    @NotNull(message = "Procedure enabled shouldn't be NULL")
+    private Boolean enabled;
 }

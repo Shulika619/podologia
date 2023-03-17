@@ -10,8 +10,6 @@ import dev.shulika.podologia.util.PriceMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,7 +24,6 @@ import java.util.Optional;
 public class PriceServiceImpl implements PriceService {
     private final PriceRepository priceRepository;
 
-    @Cacheable(value = "prices", key = "#pageable")
     @Override
     public Page<PriceResponseDTO> findAllByPage(Pageable pageable) {
         log.info("IN PriceServiceImpl - findAll - STARTED");
@@ -44,7 +41,6 @@ public class PriceServiceImpl implements PriceService {
         return PriceMapper.toDTO(price);
     }
 
-    @CacheEvict(cacheNames = "prices", allEntries = true)
     @Override
     public void create(PriceRequestDTO priceRequestDTO) {
         log.info("IN PriceServiceImpl - create - STARTED");
@@ -52,7 +48,6 @@ public class PriceServiceImpl implements PriceService {
         log.info("IN PriceServiceImpl - created - FINISHED SUCCESSFULLY");
     }
 
-    @CacheEvict(cacheNames = "prices", allEntries = true)
     @Override
     public void update(Long id, PriceRequestDTO priceRequestDTO) {
         log.info("IN PriceServiceImpl - update price by id: {} - STARTED", id);
@@ -64,11 +59,11 @@ public class PriceServiceImpl implements PriceService {
         price.setSpecialist(priceRequestDTO.getSpecialist());
         price.setMinutes(priceRequestDTO.getMinutes());
         price.setPrice(priceRequestDTO.getPrice());
+        price.setEnabled(priceRequestDTO.getEnabled());
         priceRepository.save(price);
         log.info("IN PriceServiceImpl - update price by id: {} - FINISHED SUCCESSFULLY", id);
     }
 
-    @CacheEvict(cacheNames = "prices", allEntries = true)
     @Override
     public void delete(Long id) {
         log.info("IN PriceServiceImpl - delete by id: {} - STARTED", id);

@@ -15,6 +15,7 @@ public class PriceMapper {
         priceResponseDTO.setSpecialist(price.getSpecialist());
         priceResponseDTO.setMinutes(price.getMinutes());
         priceResponseDTO.setPrice(price.getPrice());
+        priceResponseDTO.setEnabled(price.getEnabled());
         priceResponseDTO.setCreatedAt(price.getCreatedAt());
         priceResponseDTO.setUpdatedAt(price.getUpdatedAt());
         return priceResponseDTO;
@@ -26,6 +27,7 @@ public class PriceMapper {
         price.setSpecialist(priceRequestDTO.getSpecialist());
         price.setMinutes(priceRequestDTO.getMinutes());
         price.setPrice(priceRequestDTO.getPrice());
+        price.setEnabled(priceRequestDTO.getEnabled());
         return price;
     }
 }

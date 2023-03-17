@@ -24,6 +24,7 @@ public class PriceResponseDTO {
     private Specialist specialist;
     private Integer minutes;
     private Integer price;
+    private Boolean enabled;
     private Date createdAt;
     private Date updatedAt;
 }

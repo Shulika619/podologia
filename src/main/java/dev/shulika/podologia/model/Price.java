@@ -31,6 +31,9 @@ public class Price {
     @Column(name = "price")
     private Integer price;
 
+    @Column(name = "enabled")
+    private Boolean enabled;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
