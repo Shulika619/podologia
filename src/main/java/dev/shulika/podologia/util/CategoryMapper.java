@@ -1,7 +1,7 @@
 package dev.shulika.podologia.util;
 
-import dev.shulika.podologia.dto.CategoryRequestDTO;
-import dev.shulika.podologia.dto.CategoryResponseDTO;
+import dev.shulika.podologia.dto.category.CategoryRequestDTO;
+import dev.shulika.podologia.dto.category.CategoryResponseDTO;
 import dev.shulika.podologia.model.Category;
 
 public class CategoryMapper {

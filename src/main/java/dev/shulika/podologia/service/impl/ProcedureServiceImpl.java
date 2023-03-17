@@ -1,15 +1,17 @@
 package dev.shulika.podologia.service.impl;
 
-import dev.shulika.podologia.dto.ProcedureRequestDTO;
-import dev.shulika.podologia.dto.ProcedureResponseDTO;
+import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
+import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.exception.ServiceBusinessException;
 import dev.shulika.podologia.model.Procedure;
+import dev.shulika.podologia.repository.CategoryRepository;
 import dev.shulika.podologia.repository.ProcedureRepository;
 import dev.shulika.podologia.service.ProcedureService;
 import dev.shulika.podologia.util.ProcedureMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
@@ -28,8 +30,11 @@ import java.util.stream.Collectors;
 public class ProcedureServiceImpl implements ProcedureService {
 
     private final ProcedureRepository procedureRepository;
+    private final CategoryRepository categoryRepository;
+
 
     @Override
+    @Cacheable("procedures")
     public List<ProcedureResponseDTO> findAll() {
         log.info("IN ProcedureServiceImpl - findAll - STARTED");
         List<Procedure> procedures = procedureRepository.findAll();
@@ -53,6 +58,8 @@ public class ProcedureServiceImpl implements ProcedureService {
         log.info("IN ProcedureServiceImpl - create: STARTED");
         if (procedureRepository.existsByName(procedureRequestDTO.getName()))
             throw new ServiceBusinessException(procedureRequestDTO.getName(), "A procedure with this name already exists");
+        if (!categoryRepository.existsById(procedureRequestDTO.getCategoryId()))
+            throw new ObjectNotFoundException(procedureRequestDTO.getCategoryId().toString(), "Category id does not exist");
         procedureRepository.save(ProcedureMapper.fromDTO(procedureRequestDTO));
         log.info("IN ProcedureServiceImpl - created - FINISHED SUCCESSFULLY");
     }
@@ -66,10 +73,6 @@ public class ProcedureServiceImpl implements ProcedureService {
         Procedure procedure = existingProcedure.get();
         procedure.setCategoryId(procedureRequestDTO.getCategoryId());
         procedure.setName(procedureRequestDTO.getName());
-        procedure.setPodologExpertMinutes(procedureRequestDTO.getPodologExpertMinutes());
-        procedure.setPodologExpertPrice(procedureRequestDTO.getPodologExpertPrice());
-        procedure.setPodologMinutes(procedureRequestDTO.getPodologMinutes());
-        procedure.setPodologPrice(procedureRequestDTO.getPodologPrice());
         procedure.setEnabled(procedureRequestDTO.getEnabled());
         procedureRepository.save(procedure);
         log.info("IN ProcedureServiceImpl - update procedure by id: {} - FINISHED SUCCESSFULLY", id);

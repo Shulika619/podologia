@@ -5,20 +5,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Procedure")
+@Table(name = "Specialist")
 @Setter
 @Getter
-public class Procedure {
+public class Specialist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "category_id")
-    private Long categoryId;
-
     @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "enabled")
     private Boolean enabled;

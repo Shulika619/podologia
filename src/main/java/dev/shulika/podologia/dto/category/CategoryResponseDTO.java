@@ -1,4 +1,4 @@
-package dev.shulika.podologia.dto;
+package dev.shulika.podologia.dto.category;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

@@ -1,4 +1,4 @@
-package dev.shulika.podologia.dto;
+package dev.shulika.podologia.dto.category;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

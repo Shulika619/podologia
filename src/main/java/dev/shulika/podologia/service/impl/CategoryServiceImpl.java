@@ -1,7 +1,7 @@
 package dev.shulika.podologia.service.impl;
 
-import dev.shulika.podologia.dto.CategoryRequestDTO;
-import dev.shulika.podologia.dto.CategoryResponseDTO;
+import dev.shulika.podologia.dto.category.CategoryRequestDTO;
+import dev.shulika.podologia.dto.category.CategoryResponseDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.exception.ServiceBusinessException;
 import dev.shulika.podologia.model.Category;
@@ -10,6 +10,7 @@ import dev.shulika.podologia.util.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dev.shulika.podologia.repository.CategoryRepository;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
+    @Cacheable("categories")
     @Override
     public List<CategoryResponseDTO> findAll() {
         log.info("IN CategoryServiceImpl - findAll - STARTED");
