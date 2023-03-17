@@ -7,6 +7,9 @@ import dev.shulika.podologia.service.impl.ProcedureServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +24,16 @@ public class ProcedureRestController {
     private final ProcedureServiceImpl procedureService;
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        List<ProcedureResponseDTO> procedures = procedureService.findAll();
+    public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
+        Page<ProcedureResponseDTO> procedures = procedureService.findAll(pageable);
         ApiResponse<List<ProcedureResponseDTO>> responseDTO = ApiResponse
                 .<List<ProcedureResponseDTO>>builder()
                 .status("SUCCESS")
-                .data(procedures)
+                .data(procedures.getContent())
+                .totalElements(procedures.getTotalElements())
+                .perPage(procedures.getSize())
+                .currentPage(procedures.getNumber())
+                .totalPages(procedures.getTotalPages())
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

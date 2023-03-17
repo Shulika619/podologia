@@ -2,11 +2,13 @@ package dev.shulika.podologia.service;
 
 import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
 import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
 public interface ProcedureService {
-    List<ProcedureResponseDTO> findAll();
+    Page<ProcedureResponseDTO> findAll(Pageable pageable);
 
     ProcedureResponseDTO findById(Long id);
 

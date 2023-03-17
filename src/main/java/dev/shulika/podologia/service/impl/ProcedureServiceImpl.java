@@ -12,16 +12,15 @@ import dev.shulika.podologia.util.ProcedureMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,13 +34,11 @@ public class ProcedureServiceImpl implements ProcedureService {
 
     @Override
     @Cacheable("procedures")
-    public List<ProcedureResponseDTO> findAll() {
+    public Page<ProcedureResponseDTO> findAll(Pageable pageable) {
         log.info("IN ProcedureServiceImpl - findAll - STARTED");
-        List<Procedure> procedures = procedureRepository.findAll();
-        if (procedures.isEmpty())
-            return Collections.emptyList();
+        Page<Procedure> procedures = procedureRepository.findAll(pageable);
         log.info("IN ProcedureServiceImpl - findAll - FINISHED SUCCESSFULLY - ProcedureMapper::toDTO NOW");
-        return procedures.stream().map(ProcedureMapper::toDTO).collect(Collectors.toList());
+        return procedures.map(ProcedureMapper::toDTO);
     }
 
     @Override
