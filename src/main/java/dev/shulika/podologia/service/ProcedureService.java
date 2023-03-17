@@ -5,7 +5,6 @@ import dev.shulika.podologia.dto.ProcedureResponseDTO;
 
 import java.util.List;
 import java.util.Map;
-
 public interface ProcedureService {
     List<ProcedureResponseDTO> findAll();
 
