@@ -54,6 +54,7 @@ public class GlobalExceptionHandler {
         serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getField(), exception.getMessage())));
         return serviceResponse;
     }
+
     @ExceptionHandler(TransientPropertyValueException.class)
     public ApiResponse<?> handleTransientPropertyValueException(TransientPropertyValueException exception) {
         log.warn("IN GlobalExceptionHandler - TransientPropertyValueException: {}", exception);
@@ -62,6 +63,7 @@ public class GlobalExceptionHandler {
         serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getPropertyName(), "Read the API documentation and check request data")));
         return serviceResponse;
     }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ApiResponse<?> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
         log.warn("IN GlobalExceptionHandler - DataIntegrityViolationException: {}", exception);

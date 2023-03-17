@@ -1,4 +1,5 @@
 package dev.shulika.podologia.util;
+
 import dev.shulika.podologia.dto.price.PriceRequestDTO;
 import dev.shulika.podologia.dto.price.PriceResponseDTO;
 import dev.shulika.podologia.model.Price;
@@ -7,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PriceMapper {
 
-    public static PriceResponseDTO toDTO(Price price){
+    public static PriceResponseDTO toDTO(Price price) {
         PriceResponseDTO priceResponseDTO = new PriceResponseDTO();
         priceResponseDTO.setId(price.getId());
         priceResponseDTO.setProcedure(price.getProcedure());
@@ -19,7 +20,7 @@ public class PriceMapper {
         return priceResponseDTO;
     }
 
-    public static Price fromDTO(PriceRequestDTO priceRequestDTO){
+    public static Price fromDTO(PriceRequestDTO priceRequestDTO) {
         Price price = new Price();
         price.setProcedure(priceRequestDTO.getProcedure());
         price.setSpecialist(priceRequestDTO.getSpecialist());

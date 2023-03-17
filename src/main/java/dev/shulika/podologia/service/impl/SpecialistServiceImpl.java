@@ -62,7 +62,7 @@ public class SpecialistServiceImpl implements SpecialistService {
     @Override
     public void update(Long id, SpecialistRequestDTO specialistRequestDTO) {
         log.info("IN SpecialistServiceImpl - update specialist by id: {} - STARTED", id);
-        Optional<Specialist> existingSpecialist= specialistRepository.findById(id);
+        Optional<Specialist> existingSpecialist = specialistRepository.findById(id);
         if (!existingSpecialist.isPresent())
             throw new ObjectNotFoundException(id.toString(), "Specialist not found with id: " + id);
         Specialist specialist = existingSpecialist.get();
@@ -83,7 +83,7 @@ public class SpecialistServiceImpl implements SpecialistService {
         fields.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(Specialist.class, key);
             field.setAccessible(true);
-                ReflectionUtils.setField(field, existingSpecialist.get(), value);
+            ReflectionUtils.setField(field, existingSpecialist.get(), value);
         });
         specialistRepository.save(existingSpecialist.get());
         log.info("IN SpecialistServiceImpl - updateSpecialistFields - FINISHED SUCCESSFULLY");

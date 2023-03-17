@@ -22,6 +22,5 @@ public class ApiResponse<T> {
     private List<ErrorDTO> errors;
     private T data;
 
-
 }
 

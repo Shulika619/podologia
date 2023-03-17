@@ -7,7 +7,7 @@ import dev.shulika.podologia.service.impl.PriceServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +21,8 @@ public class PriceRestController {
     private final PriceServiceImpl priceService;
 
     @GetMapping
-    public ResponseEntity<?> findAllByPage(
-            @RequestParam(required = false,defaultValue = "0")int page,
-            @RequestParam(required = false,defaultValue = "4")int size
-    ) {
-        Page<PriceResponseDTO> prices = priceService.findAllByPage(PageRequest.of(page, size));
+    public ResponseEntity<?> findAllByPage(Pageable pageable) {
+        Page<PriceResponseDTO> prices = priceService.findAllByPage(pageable);
         ApiResponse<List<PriceResponseDTO>> responseDTO = ApiResponse
                 .<List<PriceResponseDTO>>builder()
                 .status("SUCCESS")
@@ -81,5 +78,4 @@ public class PriceRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
-
 }
