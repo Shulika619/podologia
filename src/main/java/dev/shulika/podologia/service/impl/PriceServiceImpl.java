@@ -11,15 +11,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,16 +25,16 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PriceServiceImpl implements PriceService {
     private final PriceRepository priceRepository;
-    @Cacheable(value="prices", key = "'findAll'")
+
+    @Cacheable(value="prices", key = "#pageable")
     @Override
-    public List<PriceResponseDTO> findAll() {
+    public Page<PriceResponseDTO> findAllByPage(Pageable pageable) {
         log.info("IN PriceServiceImpl - findAll - STARTED");
-        List<Price> prices = priceRepository.findAll();
-        if (prices.isEmpty())
-            return Collections.emptyList();
+        Page<Price> pricePage = priceRepository.findAll(pageable);
         log.info("IN PriceServiceImpl - findAll - FINISHED SUCCESSFULLY - PriceMapper::toDTO NOW");
-        return prices.stream().map(PriceMapper::toDTO).collect(Collectors.toList());
+        return pricePage.map(PriceMapper::toDTO);
     }
+
     @Override
     public PriceResponseDTO findById(Long id) {
         log.info("IN PriceServiceImpl - findById: {} - STARTED", id);
@@ -46,7 +44,7 @@ public class PriceServiceImpl implements PriceService {
         return PriceMapper.toDTO(price);
     }
 
-    @CacheEvict(value= "prices", key="'findAll'")
+    @CacheEvict(cacheNames = "prices", allEntries = true)
     @Override
     public void create(PriceRequestDTO priceRequestDTO) {
         log.info("IN PriceServiceImpl - create - STARTED");
@@ -54,7 +52,7 @@ public class PriceServiceImpl implements PriceService {
         log.info("IN PriceServiceImpl - created - FINISHED SUCCESSFULLY");
     }
 
-    @CacheEvict(value= "prices", key="'findAll'")
+    @CacheEvict(cacheNames = "prices", allEntries = true)
     @Override
     public void update(Long id, PriceRequestDTO priceRequestDTO) {
         log.info("IN PriceServiceImpl - update price by id: {} - STARTED", id);
@@ -69,7 +67,7 @@ public class PriceServiceImpl implements PriceService {
         priceRepository.save(price);
         log.info("IN PriceServiceImpl - update price by id: {} - FINISHED SUCCESSFULLY", id);
     }
-//    @CacheEvict(value= "prices", key="'findAll'")
+
     @CacheEvict(cacheNames = "prices", allEntries = true)
     @Override
     public void delete(Long id) {
