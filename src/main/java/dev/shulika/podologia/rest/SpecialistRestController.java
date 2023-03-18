@@ -3,7 +3,7 @@ package dev.shulika.podologia.rest;
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.specialist.SpecialistRequestDTO;
 import dev.shulika.podologia.dto.specialist.SpecialistResponseDTO;
-import dev.shulika.podologia.service.impl.SpecialistServiceImpl;
+import dev.shulika.podologia.service.SpecialistService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/specialists")
 @RequiredArgsConstructor
 public class SpecialistRestController {
-    private final SpecialistServiceImpl specialistService;
+    private final SpecialistService specialistService;
 
     @GetMapping
     public ResponseEntity<?> findAll() {

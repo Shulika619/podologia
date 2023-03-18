@@ -3,7 +3,7 @@ package dev.shulika.podologia.rest;
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
 import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
-import dev.shulika.podologia.service.impl.ProcedureServiceImpl;
+import dev.shulika.podologia.service.ProcedureService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +21,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/procedures")
 @RequiredArgsConstructor
 public class ProcedureRestController {
-    private final ProcedureServiceImpl procedureService;
+    private final ProcedureService procedureService;
 
     @GetMapping
     public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {

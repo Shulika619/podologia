@@ -3,14 +3,13 @@ package dev.shulika.podologia.rest;
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.category.CategoryRequestDTO;
 import dev.shulika.podologia.dto.category.CategoryResponseDTO;
+import dev.shulika.podologia.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import dev.shulika.podologia.service.impl.CategoryServiceImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/categories")
 @RequiredArgsConstructor
 public class CategoryRestController {
-    private final CategoryServiceImpl categoryService;
+    private final CategoryService categoryService;
 
     @GetMapping
     public ResponseEntity<?> findAll() {

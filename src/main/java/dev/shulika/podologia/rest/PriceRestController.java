@@ -3,7 +3,7 @@ package dev.shulika.podologia.rest;
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.price.PriceRequestDTO;
 import dev.shulika.podologia.dto.price.PriceResponseDTO;
-import dev.shulika.podologia.service.impl.PriceServiceImpl;
+import dev.shulika.podologia.service.PriceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/v1/prices")
 @RequiredArgsConstructor
 public class PriceRestController {
-    private final PriceServiceImpl priceService;
+    private final PriceService priceService;
 
     @GetMapping
     public ResponseEntity<?> findAllByPage(@PageableDefault(size = 10) Pageable pageable) {
