@@ -3,6 +3,8 @@ package dev.shulika.podologia.dto.category;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,4 +14,6 @@ public class CategoryResponseDTO {
     private String name;
     private String description;
     private Boolean enabled;
+    private Date createdAt;
+    private Date updatedAt;
 }

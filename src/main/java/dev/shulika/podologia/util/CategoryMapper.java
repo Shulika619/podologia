@@ -12,6 +12,8 @@ public class CategoryMapper {
         categoryRequestDTO.setName(category.getName());
         categoryRequestDTO.setDescription(category.getDescription());
         categoryRequestDTO.setEnabled(category.getEnabled());
+        categoryRequestDTO.setCreatedAt(category.getCreatedAt());
+        categoryRequestDTO.setUpdatedAt(category.getUpdatedAt());
         return categoryRequestDTO;
     }
 

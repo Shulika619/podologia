@@ -14,6 +14,8 @@ public class ProcedureMapper {
         procedureResponseDTO.setCategoryId(procedure.getCategoryId());
         procedureResponseDTO.setName(procedure.getName());
         procedureResponseDTO.setEnabled(procedure.getEnabled());
+        procedureResponseDTO.setCreatedAt(procedure.getCreatedAt());
+        procedureResponseDTO.setUpdatedAt(procedure.getUpdatedAt());
         return procedureResponseDTO;
     }
 

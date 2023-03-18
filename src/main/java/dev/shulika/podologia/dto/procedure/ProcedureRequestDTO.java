@@ -21,4 +21,5 @@ public class ProcedureRequestDTO {
 
     @NotNull(message = "Procedure enabled shouldn't be NULL")
     private Boolean enabled;
+
 }

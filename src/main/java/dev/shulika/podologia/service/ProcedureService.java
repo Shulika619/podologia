@@ -12,11 +12,11 @@ public interface ProcedureService {
 
     ProcedureResponseDTO findById(Long id);
 
-    void create(ProcedureRequestDTO category);
+    ProcedureResponseDTO create(ProcedureRequestDTO category);
 
-    void update(Long id, ProcedureRequestDTO category);
+    ProcedureResponseDTO update(Long id, ProcedureRequestDTO category);
 
-    void updateProcedureFields(Long id, Map<String, Object> fields);
+    ProcedureResponseDTO updateProcedureFields(Long id, Map<String, Object> fields);
 
     void delete(Long id);
 }

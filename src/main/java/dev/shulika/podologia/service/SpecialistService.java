@@ -11,11 +11,11 @@ public interface SpecialistService {
 
     SpecialistResponseDTO findById(Long id);
 
-    void create(SpecialistRequestDTO specialistRequestDTO);
+    SpecialistResponseDTO create(SpecialistRequestDTO specialistRequestDTO);
 
-    void update(Long id, SpecialistRequestDTO specialistRequestDTO);
+    SpecialistResponseDTO update(Long id, SpecialistRequestDTO specialistRequestDTO);
 
-    void updateSpecialistFields(Long id, Map<String, Object> fields);
+    SpecialistResponseDTO updateSpecialistFields(Long id, Map<String, Object> fields);
 
     void delete(Long id);
 }

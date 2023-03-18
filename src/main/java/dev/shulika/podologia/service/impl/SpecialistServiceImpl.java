@@ -49,16 +49,17 @@ public class SpecialistServiceImpl implements SpecialistService {
     }
 
     @Override
-    public void create(SpecialistRequestDTO specialistRequestDTO) {
+    public SpecialistResponseDTO create(SpecialistRequestDTO specialistRequestDTO) {
         log.info("IN SpecialistServiceImpl - create - STARTED");
         if (specialistRepository.existsByName(specialistRequestDTO.getName()))
             throw new ServiceBusinessException(specialistRequestDTO.getName(), "A specialist with this name already exists");
-        specialistRepository.save(SpecialistMapper.fromDTO(specialistRequestDTO));
+        Specialist specialistReturned = specialistRepository.save(SpecialistMapper.fromDTO(specialistRequestDTO));
         log.info("IN SpecialistServiceImpl - created - FINISHED SUCCESSFULLY");
+        return SpecialistMapper.toDTO(specialistReturned);
     }
 
     @Override
-    public void update(Long id, SpecialistRequestDTO specialistRequestDTO) {
+    public SpecialistResponseDTO update(Long id, SpecialistRequestDTO specialistRequestDTO) {
         log.info("IN SpecialistServiceImpl - update specialist by id: {} - STARTED", id);
         Optional<Specialist> existingSpecialist = specialistRepository.findById(id);
         if (!existingSpecialist.isPresent())
@@ -67,12 +68,13 @@ public class SpecialistServiceImpl implements SpecialistService {
         specialist.setName(specialistRequestDTO.getName());
         specialist.setDescription(specialistRequestDTO.getDescription());
         specialist.setEnabled(specialistRequestDTO.getEnabled());
-        specialistRepository.save(specialist);
+        Specialist specialistReturned = specialistRepository.save(specialist);
         log.info("IN SpecialistServiceImpl - update specialist by id: {} - FINISHED SUCCESSFULLY", id);
+        return SpecialistMapper.toDTO(specialistReturned);
     }
 
     @Override
-    public void updateSpecialistFields(Long id, Map<String, Object> fields) {
+    public SpecialistResponseDTO updateSpecialistFields(Long id, Map<String, Object> fields) {
         log.info("IN SpecialistServiceImpl - updateSpecialistFields: STARTED");
         Optional<Specialist> existingSpecialist = specialistRepository.findById(id);
         if (!existingSpecialist.isPresent()) {
@@ -83,8 +85,9 @@ public class SpecialistServiceImpl implements SpecialistService {
             field.setAccessible(true);
             ReflectionUtils.setField(field, existingSpecialist.get(), value);
         });
-        specialistRepository.save(existingSpecialist.get());
+        Specialist specialistReturned = specialistRepository.save(existingSpecialist.get());
         log.info("IN SpecialistServiceImpl - updateSpecialistFields - FINISHED SUCCESSFULLY");
+        return SpecialistMapper.toDTO(specialistReturned);
     }
 
     @Override

@@ -51,33 +51,33 @@ public class ProcedureRestController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid ProcedureRequestDTO procedureRequestDTO) {
-        procedureService.create(procedureRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        ProcedureResponseDTO procedureResponseDTO = procedureService.create(procedureRequestDTO);
+        ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
+                .<ProcedureResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Procedure created")
+                .data(procedureResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ProcedureRequestDTO procedureRequestDTO) {
-        procedureService.update(id, procedureRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        ProcedureResponseDTO procedureResponseDTO = procedureService.update(id, procedureRequestDTO);
+        ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
+                .<ProcedureResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Procedure updated (PUT)")
+                .data(procedureResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateProcedureFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-        procedureService.updateProcedureFields(id, fields);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        ProcedureResponseDTO procedureResponseDTO = procedureService.updateProcedureFields(id, fields);
+        ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
+                .<ProcedureResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Procedure updated (PATCH)")
+                .data(procedureResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -92,5 +92,4 @@ public class ProcedureRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
-
 }

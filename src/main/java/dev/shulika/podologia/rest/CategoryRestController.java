@@ -45,33 +45,33 @@ public class CategoryRestController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid CategoryRequestDTO categoryRequestDTO) {
-        categoryService.create(categoryRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        CategoryResponseDTO categoryResponseDTO = categoryService.create(categoryRequestDTO);
+        ApiResponse<CategoryResponseDTO> responseDTO = ApiResponse
+                .<CategoryResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Category created")
+                .data(categoryResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid CategoryRequestDTO categoryRequestDTO) {
-        categoryService.update(id, categoryRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        CategoryResponseDTO categoryResponseDTO = categoryService.update(id, categoryRequestDTO);
+        ApiResponse<CategoryResponseDTO> responseDTO = ApiResponse
+                .<CategoryResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Category updated (PUT)")
+                .data(categoryResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateProductFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-        categoryService.updateCategoryFields(id, fields);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        CategoryResponseDTO categoryResponseDTO = categoryService.updateCategoryFields(id, fields);
+        ApiResponse<CategoryResponseDTO> responseDTO = ApiResponse
+                .<CategoryResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Category updated (PATCH)")
+                .data(categoryResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

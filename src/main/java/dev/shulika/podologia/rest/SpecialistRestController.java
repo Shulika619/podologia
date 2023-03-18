@@ -43,33 +43,33 @@ public class SpecialistRestController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid SpecialistRequestDTO specialistRequestDTO) {
-        specialistService.create(specialistRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        SpecialistResponseDTO specialistResponseDTO = specialistService.create(specialistRequestDTO);
+        ApiResponse<SpecialistResponseDTO> responseDTO = ApiResponse
+                .<SpecialistResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Specialist created")
+                .data(specialistResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid SpecialistRequestDTO specialistRequestDTO) {
-        specialistService.update(id, specialistRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        SpecialistResponseDTO specialistResponseDTO = specialistService.update(id, specialistRequestDTO);
+        ApiResponse<SpecialistResponseDTO> responseDTO = ApiResponse
+                .<SpecialistResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Specialist updated (PUT)")
+                .data(specialistResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateSpecialistFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-        specialistService.updateSpecialistFields(id, fields);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        SpecialistResponseDTO specialistResponseDTO = specialistService.updateSpecialistFields(id, fields);
+        ApiResponse<SpecialistResponseDTO> responseDTO = ApiResponse
+                .<SpecialistResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Specialist updated (PATCH)")
+                .data(specialistResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
