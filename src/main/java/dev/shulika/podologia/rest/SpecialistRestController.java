@@ -6,6 +6,9 @@ import dev.shulika.podologia.dto.specialist.SpecialistResponseDTO;
 import dev.shulika.podologia.service.SpecialistService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +23,16 @@ public class SpecialistRestController {
     private final SpecialistService specialistService;
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        List<SpecialistResponseDTO> specialists = specialistService.findAll();
+    public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
+        Page<SpecialistResponseDTO> specialists = specialistService.findAll(pageable);
         ApiResponse<List<SpecialistResponseDTO>> responseDTO = ApiResponse
                 .<List<SpecialistResponseDTO>>builder()
                 .status("SUCCESS")
-                .data(specialists)
+                .data(specialists.getContent())
+                .totalElements(specialists.getTotalElements())
+                .perPage(specialists.getSize())
+                .currentPage(specialists.getNumber())
+                .totalPages(specialists.getTotalPages())
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

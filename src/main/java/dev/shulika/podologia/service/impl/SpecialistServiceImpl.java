@@ -10,16 +10,15 @@ import dev.shulika.podologia.service.SpecialistService;
 import dev.shulika.podologia.util.SpecialistMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,13 +29,11 @@ public class SpecialistServiceImpl implements SpecialistService {
     private final SpecialistRepository specialistRepository;
 
     @Override
-    public List<SpecialistResponseDTO> findAll() {
+    public Page<SpecialistResponseDTO> findAll(Pageable pageable) {
         log.info("IN SpecialistServiceImpl - findAll - STARTED");
-        List<Specialist> specialists = specialistRepository.findAll();
-        if (specialists.isEmpty())
-            return Collections.emptyList();
+        Page<Specialist> specialistPages = specialistRepository.findAll(pageable);
         log.info("IN SpecialistServiceImpl - findAll - FINISHED SUCCESSFULLY - SpecialistMapper::toDTO NOW");
-        return specialists.stream().map(SpecialistMapper::toDTO).collect(Collectors.toList());
+        return specialistPages.map(SpecialistMapper::toDTO);
     }
 
     @Override

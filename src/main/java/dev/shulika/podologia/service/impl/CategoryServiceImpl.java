@@ -10,17 +10,16 @@ import dev.shulika.podologia.util.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dev.shulika.podologia.repository.CategoryRepository;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,13 +29,11 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<CategoryResponseDTO> findAll() {
+    public Page<CategoryResponseDTO> findAll(Pageable pageable) {
         log.info("IN CategoryServiceImpl - findAll - STARTED");
-        List<Category> categories = categoryRepository.findAll();
-        if (categories.isEmpty())
-            return Collections.emptyList();
+        Page<Category> categoryPages = categoryRepository.findAll(pageable);
         log.info("IN CategoryServiceImpl - findAll - FINISHED SUCCESSFULLY - CategoryMapper::toDTO NOW");
-        return categories.stream().map(CategoryMapper::toDTO).collect(Collectors.toList());
+        return categoryPages.map(CategoryMapper::toDTO);
     }
 
     @Override

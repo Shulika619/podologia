@@ -27,9 +27,9 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Page<PriceResponseDTO> findAllByPage(Pageable pageable) {
         log.info("IN PriceServiceImpl - findAll - STARTED");
-        Page<Price> pricePage = priceRepository.findAll(pageable);
+        Page<Price> pricePages = priceRepository.findAll(pageable);
         log.info("IN PriceServiceImpl - findAll - FINISHED SUCCESSFULLY - PriceMapper::toDTO NOW");
-        return pricePage.map(PriceMapper::toDTO);
+        return pricePages.map(PriceMapper::toDTO);
     }
 
     @Override

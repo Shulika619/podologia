@@ -33,9 +33,9 @@ public class ProcedureServiceImpl implements ProcedureService {
     @Override
     public Page<ProcedureResponseDTO> findAll(Pageable pageable) {
         log.info("IN ProcedureServiceImpl - findAll - STARTED");
-        Page<Procedure> procedures = procedureRepository.findAll(pageable);
+        Page<Procedure> procedurePages = procedureRepository.findAll(pageable);
         log.info("IN ProcedureServiceImpl - findAll - FINISHED SUCCESSFULLY - ProcedureMapper::toDTO NOW");
-        return procedures.map(ProcedureMapper::toDTO);
+        return procedurePages.map(ProcedureMapper::toDTO);
     }
 
     @Override

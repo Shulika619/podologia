@@ -7,6 +7,9 @@ import dev.shulika.podologia.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +24,17 @@ public class CategoryRestController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        List<CategoryResponseDTO> categories = categoryService.findAll();
+    public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
+        Page<CategoryResponseDTO> categories = categoryService.findAll(pageable);
         ApiResponse<List<CategoryResponseDTO>> responseDTO = ApiResponse
                 .<List<CategoryResponseDTO>>builder()
                 .status("SUCCESS")
-                .data(categories)
+                .data(categories.getContent())
+                .totalElements(categories.getTotalElements())
+                .perPage(categories.getSize())
+                .currentPage(categories.getNumber())
+                .totalPages(categories.getTotalPages())
                 .build();
-
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 

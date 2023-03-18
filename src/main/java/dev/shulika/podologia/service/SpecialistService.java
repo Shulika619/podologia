@@ -2,12 +2,13 @@ package dev.shulika.podologia.service;
 
 import dev.shulika.podologia.dto.specialist.SpecialistRequestDTO;
 import dev.shulika.podologia.dto.specialist.SpecialistResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Map;
 
 public interface SpecialistService {
-    List<SpecialistResponseDTO> findAll();
+    Page<SpecialistResponseDTO> findAll(Pageable pageable);
 
     SpecialistResponseDTO findById(Long id);
 
