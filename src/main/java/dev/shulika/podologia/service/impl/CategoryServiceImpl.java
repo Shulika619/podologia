@@ -10,7 +10,6 @@ import dev.shulika.podologia.util.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dev.shulika.podologia.repository.CategoryRepository;
@@ -30,7 +29,6 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
-    @Cacheable("categories")
     @Override
     public List<CategoryResponseDTO> findAll() {
         log.info("IN CategoryServiceImpl - findAll - STARTED");

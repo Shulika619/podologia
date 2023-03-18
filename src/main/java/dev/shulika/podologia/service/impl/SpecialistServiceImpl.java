@@ -10,7 +10,6 @@ import dev.shulika.podologia.service.SpecialistService;
 import dev.shulika.podologia.util.SpecialistMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
@@ -30,7 +29,6 @@ public class SpecialistServiceImpl implements SpecialistService {
 
     private final SpecialistRepository specialistRepository;
 
-    @Cacheable("specialists")
     @Override
     public List<SpecialistResponseDTO> findAll() {
         log.info("IN SpecialistServiceImpl - findAll - STARTED");

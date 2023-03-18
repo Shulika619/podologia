@@ -11,7 +11,6 @@ import dev.shulika.podologia.service.ProcedureService;
 import dev.shulika.podologia.util.ProcedureMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,9 +30,7 @@ public class ProcedureServiceImpl implements ProcedureService {
     private final ProcedureRepository procedureRepository;
     private final CategoryRepository categoryRepository;
 
-
     @Override
-    @Cacheable("procedures")
     public Page<ProcedureResponseDTO> findAll(Pageable pageable) {
         log.info("IN ProcedureServiceImpl - findAll - STARTED");
         Page<Procedure> procedures = procedureRepository.findAll(pageable);
