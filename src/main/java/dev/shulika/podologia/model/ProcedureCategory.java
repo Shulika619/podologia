@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "Procedure")
 @Setter
 @Getter
-public class Procedure {
+public class ProcedureCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,6 +34,7 @@ public class Procedure {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(name = "category_id")
-    private Long categoryId;
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
