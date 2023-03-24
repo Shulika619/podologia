@@ -72,17 +72,16 @@ public class ProcedureCategoryServiceImpl implements ProcedureCategoryService {
     @Override
     public ProcedureCategoryResponseDTO update(Long id, ProcedureCategoryRequestDTO procedureCategoryRequestDTO) {
         log.info("IN ProcedureCategoryServiceImpl - update procedure by id: {} - STARTED", id);
+        if (procedureCategoryRequestDTO.getCategory().getName().isBlank())
+            throw new ServiceBusinessException("name", "Category name must not be empty or null");
         Optional<ProcedureCategory> existingProcedureCategory = procedureCategoryRepository.findById(id);
         if (!existingProcedureCategory.isPresent())
             throw new ObjectNotFoundException(id.toString(), "Procedure not found with id: " + id);
         ProcedureCategory procedureCategory = existingProcedureCategory.get();
 
-        if (procedureCategoryRequestDTO.getCategory().getName().isBlank())
-            throw new ServiceBusinessException("name", "Category name must not be empty or null");
-
-        Optional<Category> existingCategory = categoryRepository.findById(procedureCategory.getCategory().getId());
+        final Optional<Category> existingCategory = categoryRepository.findById(procedureCategory.getCategory().getId());
         if (!existingCategory.isPresent())
-            throw new ObjectNotFoundException(id.toString(), "Category not found with id: " + id);
+            throw new ObjectNotFoundException(id.toString(), "Category not found");
         Category category = existingCategory.get();
 
         category.setName(procedureCategoryRequestDTO.getCategory().getName());

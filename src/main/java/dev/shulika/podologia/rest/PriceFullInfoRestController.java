@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/prices-full-info")
@@ -61,6 +62,17 @@ public class PriceFullInfoRestController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
         PriceFullInfoResponseDTO priceFullInfoResponseDTO = priceFullInfoService.update(id, priceFullInfoRequestDTO);
+        ApiResponse<PriceFullInfoResponseDTO> responseDTO = ApiResponse
+                .<PriceFullInfoResponseDTO>builder()
+                .status("SUCCESS")
+                .data(priceFullInfoResponseDTO)
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+        PriceFullInfoResponseDTO priceFullInfoResponseDTO = priceFullInfoService.updateFields(id, fields);
         ApiResponse<PriceFullInfoResponseDTO> responseDTO = ApiResponse
                 .<PriceFullInfoResponseDTO>builder()
                 .status("SUCCESS")

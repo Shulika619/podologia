@@ -1,14 +1,17 @@
 package dev.shulika.podologia.dto.priceFullInfo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import dev.shulika.podologia.model.Procedure;
 import dev.shulika.podologia.model.Specialist;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Builder
 public class PriceFullInfoRequestDTO {
     @NotNull(message = "Procedure shouldn't be NULL, required field -> procedure: {id:int}")
     private Procedure procedure;
