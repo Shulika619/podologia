@@ -17,13 +17,11 @@ public class Price {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "procedure_id")
-    private Procedure procedure;
+    @Column(name = "procedure_id")
+    private Long procedureId;
 
-    @OneToOne
-    @JoinColumn(name = "specialist_id")
-    private Specialist specialist;
+    @Column(name = "specialist_id")
+    private Long specialistId;
 
     @Column(name = "minutes")
     private Integer minutes;

@@ -49,22 +49,22 @@ public class PriceFullInfoRestController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
-        priceFullInfoService.create(priceFullInfoRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+       PriceFullInfoResponseDTO priceFullInfoResponseDTO = priceFullInfoService.create(priceFullInfoRequestDTO);
+        ApiResponse<PriceFullInfoResponseDTO> responseDTO = ApiResponse
+                .<PriceFullInfoResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Price created")
+                .data(priceFullInfoResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
-        priceFullInfoService.update(id, priceFullInfoRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        PriceFullInfoResponseDTO priceFullInfoResponseDTO = priceFullInfoService.update(id, priceFullInfoRequestDTO);
+        ApiResponse<PriceFullInfoResponseDTO> responseDTO = ApiResponse
+                .<PriceFullInfoResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Price updated (PUT)")
+                .data(priceFullInfoResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

@@ -14,7 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -42,26 +45,48 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public void create(PriceRequestDTO priceRequestDTO) {
+    public PriceResponseDTO create(PriceRequestDTO priceRequestDTO) {
         log.info("IN PriceServiceImpl - create - STARTED");
-        priceRepository.save(PriceMapper.fromDTO(priceRequestDTO));
+        Price priceReturned = priceRepository.save(PriceMapper.fromDTO(priceRequestDTO));
         log.info("IN PriceServiceImpl - created - FINISHED SUCCESSFULLY");
+        return PriceMapper.toDTO(priceReturned);
     }
 
     @Override
-    public void update(Long id, PriceRequestDTO priceRequestDTO) {
+    public PriceResponseDTO update(Long id, PriceRequestDTO priceRequestDTO) {
         log.info("IN PriceServiceImpl - update price by id: {} - STARTED", id);
         Optional<Price> existPrice = priceRepository.findById(id);
         if (!existPrice.isPresent())
             throw new ObjectNotFoundException(id.toString(), "Price not found with id: " + id);
         Price price = existPrice.get();
-        price.setProcedure(priceRequestDTO.getProcedure());
-        price.setSpecialist(priceRequestDTO.getSpecialist());
+        price.setProcedureId(priceRequestDTO.getProcedureId());
+        price.setSpecialistId(priceRequestDTO.getSpecialistId());
         price.setMinutes(priceRequestDTO.getMinutes());
         price.setPrice(priceRequestDTO.getPrice());
         price.setEnabled(priceRequestDTO.getEnabled());
-        priceRepository.save(price);
+        Price priceReturned = priceRepository.save(price);
         log.info("IN PriceServiceImpl - update price by id: {} - FINISHED SUCCESSFULLY", id);
+        return PriceMapper.toDTO(priceReturned);
+    }
+
+    @Override
+    public PriceResponseDTO updateFields(Long id, Map<String, Object> fields) {
+        log.info("IN PriceServiceImpl - updateFields: STARTED");
+        Optional<Price> existingPrice = priceRepository.findById(id);
+        if (!existingPrice.isPresent()) {
+            throw new ObjectNotFoundException(id.toString(), "Price not found with id: " + id);
+        }
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Price.class, key);
+            field.setAccessible(true);
+            if (key.equals("procedureId") || key.equals("specialistId"))
+                ReflectionUtils.setField(field, existingPrice.get(), Long.valueOf((Integer) value));
+            else
+                ReflectionUtils.setField(field, existingPrice.get(), value);
+        });
+        Price priceReturned = priceRepository.save(existingPrice.get());
+        log.info("IN PriceServiceImpl - updateFields - FINISHED SUCCESSFULLY");
+        return PriceMapper.toDTO(priceReturned);
     }
 
     @Override
@@ -72,5 +97,4 @@ public class PriceServiceImpl implements PriceService {
         priceRepository.deleteById(id);
         log.info("IN PriceServiceImpl - delete by id: {} - FINISHED SUCCESSFULLY", id);
     }
-
 }

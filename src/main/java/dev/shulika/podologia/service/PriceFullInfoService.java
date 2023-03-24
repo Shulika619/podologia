@@ -10,9 +10,9 @@ public interface PriceFullInfoService {
 
     PriceFullInfoResponseDTO findById(Long id);
 
-    void create(PriceFullInfoRequestDTO priceFullInfoRequestDTO);
+    PriceFullInfoResponseDTO create(PriceFullInfoRequestDTO priceFullInfoRequestDTO);
 
-    void update(Long id, PriceFullInfoRequestDTO priceFullInfoRequestDTO);
+    PriceFullInfoResponseDTO update(Long id, PriceFullInfoRequestDTO priceFullInfoRequestDTO);
 
     void delete(Long id);
 }

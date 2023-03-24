@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/prices")
@@ -49,22 +50,33 @@ public class PriceRestController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid PriceRequestDTO priceRequestDTO) {
-        priceService.create(priceRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        PriceResponseDTO priceResponseDTO = priceService.create(priceRequestDTO);
+        ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
+                .<PriceResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Price created")
+                .data(priceResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PriceRequestDTO priceRequestDTO) {
-        priceService.update(id, priceRequestDTO);
-        ApiResponse<String> responseDTO = ApiResponse
-                .<String>builder()
+        PriceResponseDTO priceResponseDTO = priceService.update(id, priceRequestDTO);
+        ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
+                .<PriceResponseDTO>builder()
                 .status("SUCCESS")
-                .data("Price updated (PUT)")
+                .data(priceResponseDTO)
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updatePriceFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+        PriceResponseDTO priceResponseDTO = priceService.updateFields(id, fields);
+        ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
+                .<PriceResponseDTO>builder()
+                .status("SUCCESS")
+                .data(priceResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

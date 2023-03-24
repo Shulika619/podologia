@@ -41,14 +41,15 @@ public class PriceFullInfoServiceImpl implements PriceFullInfoService {
     }
 
     @Override
-    public void create(PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
+    public PriceFullInfoResponseDTO create(PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
         log.info("IN PriceFullInfoServiceImpl - create - STARTED");
-        priceFullInfoRepository.save(PriceFullInfoMapper.fromDTO(priceFullInfoRequestDTO));
+        PriceFullInfo priceFullInfoReturned = priceFullInfoRepository.save(PriceFullInfoMapper.fromDTO(priceFullInfoRequestDTO));
         log.info("IN PriceFullInfoServiceImpl - created - FINISHED SUCCESSFULLY");
+        return PriceFullInfoMapper.toDTO(priceFullInfoReturned);
     }
 
     @Override
-    public void update(Long id, PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
+    public PriceFullInfoResponseDTO update(Long id, PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
         log.info("IN PriceFullInfoServiceImpl - update price by id: {} - STARTED", id);
         Optional<PriceFullInfo> existPrice = priceFullInfoRepository.findById(id);
         if (!existPrice.isPresent())
@@ -59,8 +60,9 @@ public class PriceFullInfoServiceImpl implements PriceFullInfoService {
         price.setMinutes(priceFullInfoRequestDTO.getMinutes());
         price.setPrice(priceFullInfoRequestDTO.getPrice());
         price.setEnabled(priceFullInfoRequestDTO.getEnabled());
-        priceFullInfoRepository.save(price);
+        PriceFullInfo priceFullInfoReturned = priceFullInfoRepository.save(price);
         log.info("IN PriceFullInfoServiceImpl - update price by id: {} - FINISHED SUCCESSFULLY", id);
+        return PriceFullInfoMapper.toDTO(priceFullInfoReturned);
     }
 
     @Override
