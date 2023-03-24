@@ -15,9 +15,11 @@ public interface PriceService {
 
     PriceResponseDTO findById(Long id);
 
-    void create(PriceRequestDTO category);
+    PriceResponseDTO create(PriceRequestDTO category);
 
-    void update(Long id, PriceRequestDTO category);
+    PriceResponseDTO update(Long id, PriceRequestDTO category);
+
+    PriceResponseDTO updateFields(Long id, Map<String, Object> fields);
 
     void delete(Long id);
 }

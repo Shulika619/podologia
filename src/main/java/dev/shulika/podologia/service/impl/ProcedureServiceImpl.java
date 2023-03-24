@@ -11,17 +11,15 @@ import dev.shulika.podologia.service.ProcedureService;
 import dev.shulika.podologia.util.ProcedureMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -32,16 +30,12 @@ public class ProcedureServiceImpl implements ProcedureService {
     private final ProcedureRepository procedureRepository;
     private final CategoryRepository categoryRepository;
 
-
     @Override
-    @Cacheable("procedures")
-    public List<ProcedureResponseDTO> findAll() {
+    public Page<ProcedureResponseDTO> findAll(Pageable pageable) {
         log.info("IN ProcedureServiceImpl - findAll - STARTED");
-        List<Procedure> procedures = procedureRepository.findAll();
-        if (procedures.isEmpty())
-            return Collections.emptyList();
+        Page<Procedure> procedurePages = procedureRepository.findAll(pageable);
         log.info("IN ProcedureServiceImpl - findAll - FINISHED SUCCESSFULLY - ProcedureMapper::toDTO NOW");
-        return procedures.stream().map(ProcedureMapper::toDTO).collect(Collectors.toList());
+        return procedurePages.map(ProcedureMapper::toDTO);
     }
 
     @Override
@@ -54,18 +48,19 @@ public class ProcedureServiceImpl implements ProcedureService {
     }
 
     @Override
-    public void create(ProcedureRequestDTO procedureRequestDTO) {
+    public ProcedureResponseDTO create(ProcedureRequestDTO procedureRequestDTO) {
         log.info("IN ProcedureServiceImpl - create: STARTED");
         if (procedureRepository.existsByName(procedureRequestDTO.getName()))
             throw new ServiceBusinessException(procedureRequestDTO.getName(), "A procedure with this name already exists");
         if (!categoryRepository.existsById(procedureRequestDTO.getCategoryId()))
             throw new ObjectNotFoundException(procedureRequestDTO.getCategoryId().toString(), "Category id does not exist");
-        procedureRepository.save(ProcedureMapper.fromDTO(procedureRequestDTO));
+        Procedure procedureReturned = procedureRepository.save(ProcedureMapper.fromDTO(procedureRequestDTO));
         log.info("IN ProcedureServiceImpl - created - FINISHED SUCCESSFULLY");
+        return ProcedureMapper.toDTO(procedureReturned);
     }
 
     @Override
-    public void update(Long id, ProcedureRequestDTO procedureRequestDTO) {
+    public ProcedureResponseDTO update(Long id, ProcedureRequestDTO procedureRequestDTO) {
         log.info("IN ProcedureServiceImpl - update procedure by id: {} - STARTED", id);
         Optional<Procedure> existingProcedure = procedureRepository.findById(id);
         if (!existingProcedure.isPresent())
@@ -74,12 +69,13 @@ public class ProcedureServiceImpl implements ProcedureService {
         procedure.setCategoryId(procedureRequestDTO.getCategoryId());
         procedure.setName(procedureRequestDTO.getName());
         procedure.setEnabled(procedureRequestDTO.getEnabled());
-        procedureRepository.save(procedure);
+        Procedure procedureReturned = procedureRepository.save(procedure);
         log.info("IN ProcedureServiceImpl - update procedure by id: {} - FINISHED SUCCESSFULLY", id);
+        return ProcedureMapper.toDTO(procedureReturned);
     }
 
     @Override
-    public void updateProcedureFields(Long id, Map<String, Object> fields) {
+    public ProcedureResponseDTO updateProcedureFields(Long id, Map<String, Object> fields) {
         log.info("IN ProcedureServiceImpl - updateProcedureFields: STARTED");
         Optional<Procedure> existingProcedure = procedureRepository.findById(id);
         if (!existingProcedure.isPresent()) {
@@ -93,8 +89,9 @@ public class ProcedureServiceImpl implements ProcedureService {
             else
                 ReflectionUtils.setField(field, existingProcedure.get(), value);
         });
-        procedureRepository.save(existingProcedure.get());
+        Procedure procedureReturned = procedureRepository.save(existingProcedure.get());
         log.info("IN ProcedureServiceImpl - updateProcedureFields - FINISHED SUCCESSFULLY");
+        return ProcedureMapper.toDTO(procedureReturned);
     }
 
     @Override

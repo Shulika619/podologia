@@ -1,9 +1,9 @@
 package dev.shulika.podologia.rest;
 
 import dev.shulika.podologia.dto.ApiResponse;
-import dev.shulika.podologia.dto.price.PriceRequestDTO;
-import dev.shulika.podologia.dto.price.PriceResponseDTO;
-import dev.shulika.podologia.service.PriceService;
+import dev.shulika.podologia.dto.priceFullInfo.PriceFullInfoRequestDTO;
+import dev.shulika.podologia.dto.priceFullInfo.PriceFullInfoResponseDTO;
+import dev.shulika.podologia.service.PriceFullInfoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,16 +17,16 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/prices")
+@RequestMapping("/api/v1/prices-full-info")
 @RequiredArgsConstructor
-public class PriceRestController {
-    private final PriceService priceService;
+public class PriceFullInfoRestController {
+    private final PriceFullInfoService priceFullInfoService;
 
     @GetMapping
     public ResponseEntity<?> findAllByPage(@PageableDefault(size = 10) Pageable pageable) {
-        Page<PriceResponseDTO> prices = priceService.findAllByPage(pageable);
-        ApiResponse<List<PriceResponseDTO>> responseDTO = ApiResponse
-                .<List<PriceResponseDTO>>builder()
+        Page<PriceFullInfoResponseDTO> prices = priceFullInfoService.findAllByPage(pageable);
+        ApiResponse<List<PriceFullInfoResponseDTO>> responseDTO = ApiResponse
+                .<List<PriceFullInfoResponseDTO>>builder()
                 .status("SUCCESS")
                 .data(prices.getContent())
                 .totalElements(prices.getTotalElements())
@@ -39,9 +39,9 @@ public class PriceRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id) {
-        PriceResponseDTO priceResponseDTO = priceService.findById(id);
-        ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
-                .<PriceResponseDTO>builder()
+        PriceFullInfoResponseDTO priceResponseDTO = priceFullInfoService.findById(id);
+        ApiResponse<PriceFullInfoResponseDTO> responseDTO = ApiResponse
+                .<PriceFullInfoResponseDTO>builder()
                 .status("SUCCESS")
                 .data(priceResponseDTO)
                 .build();
@@ -49,41 +49,41 @@ public class PriceRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid PriceRequestDTO priceRequestDTO) {
-        PriceResponseDTO priceResponseDTO = priceService.create(priceRequestDTO);
-        ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
-                .<PriceResponseDTO>builder()
+    public ResponseEntity<?> create(@RequestBody @Valid PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
+        PriceFullInfoResponseDTO priceFullInfoResponseDTO = priceFullInfoService.create(priceFullInfoRequestDTO);
+        ApiResponse<PriceFullInfoResponseDTO> responseDTO = ApiResponse
+                .<PriceFullInfoResponseDTO>builder()
                 .status("SUCCESS")
-                .data(priceResponseDTO)
+                .data(priceFullInfoResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PriceRequestDTO priceRequestDTO) {
-        PriceResponseDTO priceResponseDTO = priceService.update(id, priceRequestDTO);
-        ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
-                .<PriceResponseDTO>builder()
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PriceFullInfoRequestDTO priceFullInfoRequestDTO) {
+        PriceFullInfoResponseDTO priceFullInfoResponseDTO = priceFullInfoService.update(id, priceFullInfoRequestDTO);
+        ApiResponse<PriceFullInfoResponseDTO> responseDTO = ApiResponse
+                .<PriceFullInfoResponseDTO>builder()
                 .status("SUCCESS")
-                .data(priceResponseDTO)
+                .data(priceFullInfoResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updatePriceFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-        PriceResponseDTO priceResponseDTO = priceService.updateFields(id, fields);
-        ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
-                .<PriceResponseDTO>builder()
+    public ResponseEntity<?> updateFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+        PriceFullInfoResponseDTO priceFullInfoResponseDTO = priceFullInfoService.updateFields(id, fields);
+        ApiResponse<PriceFullInfoResponseDTO> responseDTO = ApiResponse
+                .<PriceFullInfoResponseDTO>builder()
                 .status("SUCCESS")
-                .data(priceResponseDTO)
+                .data(priceFullInfoResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        priceService.delete(id);
+        priceFullInfoService.delete(id);
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")

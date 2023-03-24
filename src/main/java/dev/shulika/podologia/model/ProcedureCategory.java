@@ -1,33 +1,25 @@
 package dev.shulika.podologia.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "Price")
-@Getter
+@Table(name = "Procedure")
 @Setter
-public class Price {
+@Getter
+public class ProcedureCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "procedure_id")
-    private Long procedureId;
-
-    @Column(name = "specialist_id")
-    private Long specialistId;
-
-    @Column(name = "minutes")
-    private Integer minutes;
-
-    @Column(name = "price")
-    private Integer price;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "enabled")
     private Boolean enabled;
@@ -41,4 +33,8 @@ public class Price {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

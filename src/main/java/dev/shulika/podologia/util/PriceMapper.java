@@ -11,10 +11,11 @@ public class PriceMapper {
     public static PriceResponseDTO toDTO(Price price) {
         PriceResponseDTO priceResponseDTO = new PriceResponseDTO();
         priceResponseDTO.setId(price.getId());
-        priceResponseDTO.setProcedure(price.getProcedure());
-        priceResponseDTO.setSpecialist(price.getSpecialist());
+        priceResponseDTO.setProcedureId(price.getProcedureId());
+        priceResponseDTO.setSpecialistId(price.getSpecialistId());
         priceResponseDTO.setMinutes(price.getMinutes());
         priceResponseDTO.setPrice(price.getPrice());
+        priceResponseDTO.setEnabled(price.getEnabled());
         priceResponseDTO.setCreatedAt(price.getCreatedAt());
         priceResponseDTO.setUpdatedAt(price.getUpdatedAt());
         return priceResponseDTO;
@@ -22,10 +23,11 @@ public class PriceMapper {
 
     public static Price fromDTO(PriceRequestDTO priceRequestDTO) {
         Price price = new Price();
-        price.setProcedure(priceRequestDTO.getProcedure());
-        price.setSpecialist(priceRequestDTO.getSpecialist());
+        price.setProcedureId(priceRequestDTO.getProcedureId());
+        price.setSpecialistId(priceRequestDTO.getSpecialistId());
         price.setMinutes(priceRequestDTO.getMinutes());
         price.setPrice(priceRequestDTO.getPrice());
+        price.setEnabled(priceRequestDTO.getEnabled());
         return price;
     }
 }

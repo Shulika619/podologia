@@ -1,12 +1,11 @@
 package dev.shulika.podologia.rest;
 
 import dev.shulika.podologia.dto.ApiResponse;
-import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
-import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
-import dev.shulika.podologia.service.ProcedureService;
+import dev.shulika.podologia.dto.procedureCategory.ProcedureCategoryRequestDTO;
+import dev.shulika.podologia.dto.procedureCategory.ProcedureCategoryResponseDTO;
+import dev.shulika.podologia.service.ProcedureCategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,16 +17,16 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/procedures")
+@RequestMapping("/api/v1/procedures-with-categories")
 @RequiredArgsConstructor
-public class ProcedureRestController {
-    private final ProcedureService procedureService;
+public class ProcedureCategoryRestController {
+    private final ProcedureCategoryService procedureCategoryService;
 
     @GetMapping
     public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
-        Page<ProcedureResponseDTO> procedures = procedureService.findAll(pageable);
-        ApiResponse<List<ProcedureResponseDTO>> responseDTO = ApiResponse
-                .<List<ProcedureResponseDTO>>builder()
+        Page<ProcedureCategoryResponseDTO> procedures = procedureCategoryService.findAll(pageable);
+        ApiResponse<List<ProcedureCategoryResponseDTO>> responseDTO = ApiResponse
+                .<List<ProcedureCategoryResponseDTO>>builder()
                 .status("SUCCESS")
                 .data(procedures.getContent())
                 .totalElements(procedures.getTotalElements())
@@ -40,9 +39,9 @@ public class ProcedureRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable long id) {
-        ProcedureResponseDTO procedureResponseDTO = procedureService.findById(id);
-        ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
-                .<ProcedureResponseDTO>builder()
+        ProcedureCategoryResponseDTO procedureResponseDTO = procedureCategoryService.findById(id);
+        ApiResponse<ProcedureCategoryResponseDTO> responseDTO = ApiResponse
+                .<ProcedureCategoryResponseDTO>builder()
                 .status("SUCCESS")
                 .data(procedureResponseDTO)
                 .build();
@@ -50,41 +49,41 @@ public class ProcedureRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid ProcedureRequestDTO procedureRequestDTO) {
-        ProcedureResponseDTO procedureResponseDTO = procedureService.create(procedureRequestDTO);
-        ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
-                .<ProcedureResponseDTO>builder()
+    public ResponseEntity<?> create(@RequestBody @Valid ProcedureCategoryRequestDTO procedureCategoryRequestDTO) {
+        ProcedureCategoryResponseDTO procedureCategoryResponseDTO = procedureCategoryService.create(procedureCategoryRequestDTO);
+        ApiResponse<ProcedureCategoryResponseDTO> responseDTO = ApiResponse
+                .<ProcedureCategoryResponseDTO>builder()
                 .status("SUCCESS")
-                .data(procedureResponseDTO)
+                .data(procedureCategoryResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ProcedureRequestDTO procedureRequestDTO) {
-        ProcedureResponseDTO procedureResponseDTO = procedureService.update(id, procedureRequestDTO);
-        ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
-                .<ProcedureResponseDTO>builder()
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ProcedureCategoryRequestDTO procedureCategoryRequestDTO) {
+        ProcedureCategoryResponseDTO procedureCategoryResponseDTO = procedureCategoryService.update(id, procedureCategoryRequestDTO);
+        ApiResponse<ProcedureCategoryResponseDTO> responseDTO = ApiResponse
+                .<ProcedureCategoryResponseDTO>builder()
                 .status("SUCCESS")
-                .data(procedureResponseDTO)
+                .data(procedureCategoryResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateProcedureFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-        ProcedureResponseDTO procedureResponseDTO = procedureService.updateProcedureFields(id, fields);
-        ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
-                .<ProcedureResponseDTO>builder()
+        ProcedureCategoryResponseDTO procedureCategoryResponseDTO = procedureCategoryService.updateProcedureFields(id, fields);
+        ApiResponse<ProcedureCategoryResponseDTO> responseDTO = ApiResponse
+                .<ProcedureCategoryResponseDTO>builder()
                 .status("SUCCESS")
-                .data(procedureResponseDTO)
+                .data(procedureCategoryResponseDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        procedureService.delete(id);
+        procedureCategoryService.delete(id);
         ApiResponse<String> responseDTO = ApiResponse
                 .<String>builder()
                 .status("SUCCESS")

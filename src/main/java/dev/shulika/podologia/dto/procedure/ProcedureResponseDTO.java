@@ -5,13 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProcedureResponseDTO {
     private Long id;
-    private Long categoryId;
     private String name;
     private Boolean enabled;
+    private Date createdAt;
+    private Date updatedAt;
+    private Long categoryId;
 }

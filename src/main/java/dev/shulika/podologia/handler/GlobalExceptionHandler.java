@@ -47,6 +47,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ServiceBusinessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<?> handleServiceException(ServiceBusinessException exception) {
         log.warn("IN GlobalExceptionHandler - ServiceBusinessException: {}", exception);
         ApiResponse<?> serviceResponse = new ApiResponse<>();
@@ -56,6 +57,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(TransientPropertyValueException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<?> handleTransientPropertyValueException(TransientPropertyValueException exception) {
         log.warn("IN GlobalExceptionHandler - TransientPropertyValueException: {}", exception);
         ApiResponse<?> serviceResponse = new ApiResponse<>();
@@ -65,6 +67,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<?> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
         log.warn("IN GlobalExceptionHandler - DataIntegrityViolationException: {}", exception);
         ApiResponse<?> serviceResponse = new ApiResponse<>();

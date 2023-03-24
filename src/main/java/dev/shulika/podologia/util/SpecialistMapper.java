@@ -14,6 +14,8 @@ public class SpecialistMapper {
         specialistResponseDTO.setName(specialist.getName());
         specialistResponseDTO.setDescription(specialist.getDescription());
         specialistResponseDTO.setEnabled(specialist.getEnabled());
+        specialistResponseDTO.setCreatedAt(specialist.getCreatedAt());
+        specialistResponseDTO.setUpdatedAt(specialist.getUpdatedAt());
         return specialistResponseDTO;
     }
 

@@ -10,18 +10,16 @@ import dev.shulika.podologia.util.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dev.shulika.podologia.repository.CategoryRepository;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,15 +28,12 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
-    @Cacheable("categories")
     @Override
-    public List<CategoryResponseDTO> findAll() {
+    public Page<CategoryResponseDTO> findAll(Pageable pageable) {
         log.info("IN CategoryServiceImpl - findAll - STARTED");
-        List<Category> categories = categoryRepository.findAll();
-        if (categories.isEmpty())
-            return Collections.emptyList();
+        Page<Category> categoryPages = categoryRepository.findAll(pageable);
         log.info("IN CategoryServiceImpl - findAll - FINISHED SUCCESSFULLY - CategoryMapper::toDTO NOW");
-        return categories.stream().map(CategoryMapper::toDTO).collect(Collectors.toList());
+        return categoryPages.map(CategoryMapper::toDTO);
     }
 
     @Override
@@ -51,16 +46,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void create(CategoryRequestDTO categoryRequestDTO) {
+    public CategoryResponseDTO create(CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - create: STARTED");
         if (categoryRepository.existsByName(categoryRequestDTO.getName()))
             throw new ServiceBusinessException(categoryRequestDTO.getName(), "A category with this name already exists");
-        categoryRepository.save(CategoryMapper.fromDTO(categoryRequestDTO));
+        Category categoryReturned = categoryRepository.save(CategoryMapper.fromDTO(categoryRequestDTO));
         log.info("IN CategoryServiceImpl - created - FINISHED SUCCESSFULLY");
+        return CategoryMapper.toDTO(categoryReturned);
     }
 
     @Override
-    public void update(Long id, CategoryRequestDTO categoryRequestDTO) {
+    public CategoryResponseDTO update(Long id, CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - update category by id: {} - STARTED", id);
         Optional<Category> existingCategory = categoryRepository.findById(id);
         if (!existingCategory.isPresent())
@@ -69,12 +65,13 @@ public class CategoryServiceImpl implements CategoryService {
         category.setName(categoryRequestDTO.getName());
         category.setDescription(categoryRequestDTO.getDescription());
         category.setEnabled(categoryRequestDTO.getEnabled());
-        categoryRepository.save(category);
+        Category categoryReturned = categoryRepository.save(category);
         log.info("IN CategoryServiceImpl - update category by id: {} - FINISHED SUCCESSFULLY", id);
+        return CategoryMapper.toDTO(categoryReturned);
     }
 
     @Override
-    public void updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: add validate
+    public CategoryResponseDTO updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: add validate
         log.info("IN CategoryServiceImpl - updateCategoryFields: STARTED");
         Optional<Category> existingCategory = categoryRepository.findById(id);
         if (!existingCategory.isPresent()) {
@@ -85,8 +82,9 @@ public class CategoryServiceImpl implements CategoryService {
             field.setAccessible(true);
             ReflectionUtils.setField(field, existingCategory.get(), value);
         });
-        categoryRepository.save(existingCategory.get());
+        Category categoryReturned = categoryRepository.save(existingCategory.get());
         log.info("IN CategoryServiceImpl - updateCategoryFields - FINISHED SUCCESSFULLY");
+        return CategoryMapper.toDTO(categoryReturned);
     }
 
     @Override

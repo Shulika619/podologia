@@ -2,20 +2,21 @@ package dev.shulika.podologia.service;
 
 import dev.shulika.podologia.dto.category.CategoryRequestDTO;
 import dev.shulika.podologia.dto.category.CategoryResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Map;
 
 public interface CategoryService {
-    List<CategoryResponseDTO> findAll();
+    Page<CategoryResponseDTO> findAll(Pageable pageable);
 
     CategoryResponseDTO findById(Long id);
 
-    void create(CategoryRequestDTO category);
+    CategoryResponseDTO create(CategoryRequestDTO category);
 
-    void update(Long id, CategoryRequestDTO category);
+    CategoryResponseDTO update(Long id, CategoryRequestDTO category);
 
-    void updateCategoryFields(Long id, Map<String, Object> fields);
+    CategoryResponseDTO updateCategoryFields(Long id, Map<String, Object> fields);
 
     void delete(Long id);
 }

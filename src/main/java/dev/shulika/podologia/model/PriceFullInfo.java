@@ -1,7 +1,8 @@
 package dev.shulika.podologia.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,17 +12,19 @@ import java.util.Date;
 @Table(name = "Price")
 @Getter
 @Setter
-public class Price {
+public class PriceFullInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "procedure_id")
-    private Long procedureId;
+    @OneToOne
+    @JoinColumn(name = "procedure_id")
+    private Procedure procedure;
 
-    @Column(name = "specialist_id")
-    private Long specialistId;
+    @OneToOne
+    @JoinColumn(name = "specialist_id")
+    private Specialist specialist;
 
     @Column(name = "minutes")
     private Integer minutes;
