@@ -15,6 +15,7 @@ public interface PriceFullInfoService {
     PriceFullInfoResponseDTO create(PriceFullInfoRequestDTO priceFullInfoRequestDTO);
 
     PriceFullInfoResponseDTO update(Long id, PriceFullInfoRequestDTO priceFullInfoRequestDTO);
+
     PriceFullInfoResponseDTO updateFields(Long id, Map<String, Object> fields);
 
     void delete(Long id);
