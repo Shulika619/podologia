@@ -1,4 +1,4 @@
-package dev.shulika.podologia.rest;
+package dev.shulika.podologia.controller;
 
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.specialist.SpecialistRequestDTO;

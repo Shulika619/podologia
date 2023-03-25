@@ -1,4 +1,4 @@
-package dev.shulika.podologia.rest;
+package dev.shulika.podologia.controller;
 
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
@@ -6,7 +6,6 @@ import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
 import dev.shulika.podologia.service.ProcedureService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

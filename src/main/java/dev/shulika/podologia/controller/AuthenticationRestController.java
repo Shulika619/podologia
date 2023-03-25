@@ -1,4 +1,4 @@
-package dev.shulika.podologia.rest;
+package dev.shulika.podologia.controller;
 
 import dev.shulika.podologia.dto.auth.AuthRequestDTO;
 import dev.shulika.podologia.dto.auth.AuthResponseDTO;
@@ -25,6 +25,7 @@ public class AuthenticationRestController {
     ) {
         return ResponseEntity.ok(service.register(request));
     }
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponseDTO> authenticate(
             @RequestBody @Valid AuthRequestDTO request

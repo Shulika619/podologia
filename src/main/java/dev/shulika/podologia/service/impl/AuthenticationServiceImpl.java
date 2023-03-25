@@ -10,7 +10,6 @@ import dev.shulika.podologia.model.User;
 import dev.shulika.podologia.repository.TokenRepository;
 import dev.shulika.podologia.repository.UserRepository;
 import dev.shulika.podologia.service.AuthenticationService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
