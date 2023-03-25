@@ -4,6 +4,7 @@ import dev.shulika.podologia.dto.auth.AuthRequestDTO;
 import dev.shulika.podologia.dto.auth.AuthResponseDTO;
 import dev.shulika.podologia.dto.auth.RegisterRequestDTO;
 import dev.shulika.podologia.service.impl.AuthenticationServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +21,13 @@ public class AuthenticationRestController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> register(
-            @RequestBody RegisterRequestDTO request
+            @RequestBody @Valid RegisterRequestDTO request
     ) {
         return ResponseEntity.ok(service.register(request));
     }
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponseDTO> authenticate(
-            @RequestBody AuthRequestDTO request
+            @RequestBody @Valid AuthRequestDTO request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
     }
