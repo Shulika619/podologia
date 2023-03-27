@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .authorizeRequests()
 //                .requestMatchers("/api/v1/users/**").hasAuthority("ADMIN")
                 .requestMatchers("/api/v1/auth/**",
-                        "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/v1/api-docs/**").permitAll()
+                        "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/**").hasAnyAuthority("ADMIN", "MANAGER")
                 .requestMatchers(HttpMethod.PUT, "/api/v1/**").hasAnyAuthority("ADMIN", "MANAGER")
                 .requestMatchers(HttpMethod.PATCH, "/api/v1/**").hasAnyAuthority("ADMIN", "MANAGER")
