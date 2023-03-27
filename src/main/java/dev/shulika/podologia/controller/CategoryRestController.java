@@ -4,6 +4,8 @@ import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.category.CategoryRequestDTO;
 import dev.shulika.podologia.dto.category.CategoryResponseDTO;
 import dev.shulika.podologia.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import java.util.Map;
 public class CategoryRestController {
     private final CategoryService categoryService;
 
+    @Operation(summary = "Get all user", description = "Get all  user")
     @GetMapping
     public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
         Page<CategoryResponseDTO> categories = categoryService.findAll(pageable);
