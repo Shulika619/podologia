@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dev.shulika.podologia.repository.CategoryRepository;
@@ -28,6 +29,7 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
+    @PreAuthorize("hasRole('ADMIN')")   //TODO
     @Override
     public Page<CategoryResponseDTO> findAll(Pageable pageable) {
         log.info("IN CategoryServiceImpl - findAll - STARTED");

@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
 
 @Component
@@ -39,7 +40,7 @@ public class JWTFilter extends OncePerRequestFilter {
             } else {
                 try {
                     String email = jwtUtil.validateTokenAndRetrieveClaim(jwt);
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                    User userDetails = userDetailsService.loadUserByUsername(email);
 
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(userDetails,

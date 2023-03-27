@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public User loadUserByUsername(String email){
+    public User loadUserByUsername(String email) {
         log.info("IN UserDetailsServiceImpl - loadUserByUsername: STARTED");
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ObjectNotFoundException(email, "Email not found "));

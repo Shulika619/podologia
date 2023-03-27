@@ -23,7 +23,6 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JWTFilter jwtFilter;
 
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
@@ -42,6 +41,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
