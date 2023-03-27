@@ -4,15 +4,12 @@ import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.auth.AuthRequestDTO;
 import dev.shulika.podologia.dto.auth.AuthResponseDTO;
 import dev.shulika.podologia.dto.auth.RegisterRequestDTO;
-import dev.shulika.podologia.model.User;
 import dev.shulika.podologia.service.impl.AuthServiceImpl;
 import dev.shulika.podologia.util.JWTUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,9 +47,6 @@ public class AuthRestController {
                 .jwtToken(token)
                 .data(authResponseDTO)
                 .build();
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        var user = (User) authentication.getPrincipal();
-//        System.out.println("++++++++++++++++++" + user.getEmail());
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 }
