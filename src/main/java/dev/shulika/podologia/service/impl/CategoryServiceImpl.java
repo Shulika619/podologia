@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
@@ -46,7 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public CategoryResponseDTO create(CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - create: STARTED");
         if (categoryRepository.existsByName(categoryRequestDTO.getName()))
@@ -57,7 +55,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public CategoryResponseDTO update(Long id, CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - update category by id: {} - STARTED", id);
         Optional<Category> existingCategory = categoryRepository.findById(id);
@@ -73,7 +70,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public CategoryResponseDTO updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: add validate
         log.info("IN CategoryServiceImpl - updateCategoryFields: STARTED");
         Optional<Category> existingCategory = categoryRepository.findById(id);
@@ -91,7 +87,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public void delete(Long id) {
         log.info("IN CategoryServiceImpl - delete by id: {} - STARTED", id);
         if (!categoryRepository.existsById(id))
