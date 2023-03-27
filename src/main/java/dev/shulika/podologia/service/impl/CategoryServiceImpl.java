@@ -5,17 +5,16 @@ import dev.shulika.podologia.dto.category.CategoryResponseDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.exception.ServiceBusinessException;
 import dev.shulika.podologia.model.Category;
+import dev.shulika.podologia.repository.CategoryRepository;
 import dev.shulika.podologia.service.CategoryService;
 import dev.shulika.podologia.util.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import dev.shulika.podologia.repository.CategoryRepository;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -29,7 +28,6 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
-    @PreAuthorize("hasRole('ADMIN')")   //TODO
     @Override
     public Page<CategoryResponseDTO> findAll(Pageable pageable) {
         log.info("IN CategoryServiceImpl - findAll - STARTED");
@@ -48,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public CategoryResponseDTO create(CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - create: STARTED");
         if (categoryRepository.existsByName(categoryRequestDTO.getName()))
@@ -58,6 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public CategoryResponseDTO update(Long id, CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - update category by id: {} - STARTED", id);
         Optional<Category> existingCategory = categoryRepository.findById(id);
@@ -73,6 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public CategoryResponseDTO updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: add validate
         log.info("IN CategoryServiceImpl - updateCategoryFields: STARTED");
         Optional<Category> existingCategory = categoryRepository.findById(id);
@@ -90,6 +91,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public void delete(Long id) {
         log.info("IN CategoryServiceImpl - delete by id: {} - STARTED", id);
         if (!categoryRepository.existsById(id))
