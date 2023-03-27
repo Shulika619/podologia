@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationDTO {
+public class AuthRequestDTO {
     @Email(message = "Invalid email format")
     private String email;
     @NotBlank(message = "Password must not be empty or null")

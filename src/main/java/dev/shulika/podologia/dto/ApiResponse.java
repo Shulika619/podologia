@@ -15,12 +15,12 @@ import java.util.List;
 @Builder
 public class ApiResponse<T> {
     private String status;
+    private String jwtToken;
     private Long totalElements;
     private Integer perPage;
     private Integer currentPage;
     private Integer totalPages;
     private List<ErrorDTO> errors;
     private T data;
-
 }
 
