@@ -5,6 +5,7 @@ import dev.shulika.podologia.dto.procedureCategory.ProcedureCategoryRequestDTO;
 import dev.shulika.podologia.dto.procedureCategory.ProcedureCategoryResponseDTO;
 import dev.shulika.podologia.service.ProcedureCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/procedures-with-categories")
 @RequiredArgsConstructor
 @Tag(name = "Procedure with Category", description = "Contains full information about procedure with category: specialist full info, procedure name ")
+@SecurityRequirement(name = "bearerAuth")
 public class ProcedureCategoryRestController {
     private final ProcedureCategoryService procedureCategoryService;
 

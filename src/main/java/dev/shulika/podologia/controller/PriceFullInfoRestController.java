@@ -5,6 +5,7 @@ import dev.shulika.podologia.dto.priceFullInfo.PriceFullInfoRequestDTO;
 import dev.shulika.podologia.dto.priceFullInfo.PriceFullInfoResponseDTO;
 import dev.shulika.podologia.service.PriceFullInfoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/prices-full-info")
 @RequiredArgsConstructor
 @Tag(name = "Price Full Info", description = "Contains more information: procedure full info, specialist full info, price, time")
+@SecurityRequirement(name = "bearerAuth")
 public class PriceFullInfoRestController {
     private final PriceFullInfoService priceFullInfoService;
 

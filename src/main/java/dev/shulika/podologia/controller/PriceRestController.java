@@ -5,6 +5,7 @@ import dev.shulika.podologia.dto.price.PriceRequestDTO;
 import dev.shulika.podologia.dto.price.PriceResponseDTO;
 import dev.shulika.podologia.service.PriceService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/prices")
 @RequiredArgsConstructor
 @Tag(name = "Price", description = "Contains simple information: procedure id only, specialist id only, price, time")
+@SecurityRequirement(name = "bearerAuth")
 public class PriceRestController {
     private final PriceService priceService;
 

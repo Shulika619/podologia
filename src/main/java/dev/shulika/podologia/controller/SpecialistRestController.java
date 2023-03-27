@@ -5,6 +5,7 @@ import dev.shulika.podologia.dto.specialist.SpecialistRequestDTO;
 import dev.shulika.podologia.dto.specialist.SpecialistResponseDTO;
 import dev.shulika.podologia.service.SpecialistService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/specialists")
 @RequiredArgsConstructor
 @Tag(name = "Specialist", description = "Specialists for procedures, contains all the operations that can be performed on specialist")
+@SecurityRequirement(name = "bearerAuth")
 public class SpecialistRestController {
     private final SpecialistService specialistService;
 

@@ -5,6 +5,7 @@ import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
 import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
 import dev.shulika.podologia.service.ProcedureService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/procedures")
 @RequiredArgsConstructor
 @Tag(name = "Procedure", description = "Contains simple information about procedure: specialist info only id, procedure name ")
+@SecurityRequirement(name = "bearerAuth")
 public class ProcedureRestController {
     private final ProcedureService procedureService;
 

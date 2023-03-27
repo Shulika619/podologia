@@ -9,11 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "Podologia API", version = "v1"))
 @SecurityScheme(
-        name = "Bearer Authentication",
+        name = "bearerAuth",
         type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
         scheme = "bearer"
 )
 public class OpenApiConfig {
 }
-//TODO Bearer Authentication
