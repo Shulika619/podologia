@@ -4,6 +4,9 @@ import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.price.PriceRequestDTO;
 import dev.shulika.podologia.dto.price.PriceResponseDTO;
 import dev.shulika.podologia.service.PriceService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,10 +22,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/prices")
 @RequiredArgsConstructor
+@Tag(name = "Price", description = "Contains simple information: procedure id only, specialist id only, price, time")
+@SecurityRequirement(name = "bearerAuth")
 public class PriceRestController {
     private final PriceService priceService;
 
     @GetMapping
+    @Operation(summary = "Get all prices", description = "Get all prices")
     public ResponseEntity<?> findAllByPage(@PageableDefault(size = 10) Pageable pageable) {
         Page<PriceResponseDTO> prices = priceService.findAllByPage(pageable);
         ApiResponse<List<PriceResponseDTO>> responseDTO = ApiResponse
@@ -38,6 +44,7 @@ public class PriceRestController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get price by id", description = "Get price by id")
     public ResponseEntity<?> findById(@PathVariable long id) {
         PriceResponseDTO priceResponseDTO = priceService.findById(id);
         ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
@@ -49,6 +56,7 @@ public class PriceRestController {
     }
 
     @PostMapping
+    @Operation(summary = "Create price", description = "Create price")
     public ResponseEntity<?> create(@RequestBody @Valid PriceRequestDTO priceRequestDTO) {
         PriceResponseDTO priceResponseDTO = priceService.create(priceRequestDTO);
         ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
@@ -60,6 +68,7 @@ public class PriceRestController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Edit price: Put", description = "Edit price: Put")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid PriceRequestDTO priceRequestDTO) {
         PriceResponseDTO priceResponseDTO = priceService.update(id, priceRequestDTO);
         ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
@@ -71,6 +80,7 @@ public class PriceRestController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Edit price: Patch", description = "Edit price: Patch")
     public ResponseEntity<?> updatePriceFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         PriceResponseDTO priceResponseDTO = priceService.updateFields(id, fields);
         ApiResponse<PriceResponseDTO> responseDTO = ApiResponse
@@ -82,6 +92,7 @@ public class PriceRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete price", description = "Delete price")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         priceService.delete(id);
         ApiResponse<String> responseDTO = ApiResponse

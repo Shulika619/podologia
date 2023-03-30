@@ -4,6 +4,9 @@ import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.specialist.SpecialistRequestDTO;
 import dev.shulika.podologia.dto.specialist.SpecialistResponseDTO;
 import dev.shulika.podologia.service.SpecialistService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,10 +22,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/specialists")
 @RequiredArgsConstructor
+@Tag(name = "Specialist", description = "Specialists for procedures, contains all the operations that can be performed on specialist")
+@SecurityRequirement(name = "bearerAuth")
 public class SpecialistRestController {
     private final SpecialistService specialistService;
 
     @GetMapping
+    @Operation(summary = "Get all specialists", description = "Get all specialists")
     public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
         Page<SpecialistResponseDTO> specialists = specialistService.findAll(pageable);
         ApiResponse<List<SpecialistResponseDTO>> responseDTO = ApiResponse
@@ -38,6 +44,7 @@ public class SpecialistRestController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get specialist by id", description = "Get specialist by id")
     public ResponseEntity<?> findById(@PathVariable long id) {
         SpecialistResponseDTO specialistResponseDTO = specialistService.findById(id);
         ApiResponse<SpecialistResponseDTO> responseDTO = ApiResponse
@@ -49,6 +56,7 @@ public class SpecialistRestController {
     }
 
     @PostMapping
+    @Operation(summary = "Create specialist", description = "Create specialist")
     public ResponseEntity<?> create(@RequestBody @Valid SpecialistRequestDTO specialistRequestDTO) {
         SpecialistResponseDTO specialistResponseDTO = specialistService.create(specialistRequestDTO);
         ApiResponse<SpecialistResponseDTO> responseDTO = ApiResponse
@@ -60,6 +68,7 @@ public class SpecialistRestController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Edit specialist: Put", description = "Edit specialist: Put")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid SpecialistRequestDTO specialistRequestDTO) {
         SpecialistResponseDTO specialistResponseDTO = specialistService.update(id, specialistRequestDTO);
         ApiResponse<SpecialistResponseDTO> responseDTO = ApiResponse
@@ -71,6 +80,7 @@ public class SpecialistRestController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Edit specialist: Patch", description = "Edit specialist: Patch")
     public ResponseEntity<?> updateSpecialistFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         SpecialistResponseDTO specialistResponseDTO = specialistService.updateSpecialistFields(id, fields);
         ApiResponse<SpecialistResponseDTO> responseDTO = ApiResponse
@@ -82,6 +92,7 @@ public class SpecialistRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete specialist", description = "Delete specialist")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         specialistService.delete(id);
         ApiResponse<String> responseDTO = ApiResponse
@@ -91,5 +102,4 @@ public class SpecialistRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
-
 }

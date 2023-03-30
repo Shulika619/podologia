@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
@@ -44,7 +43,6 @@ public class CategoryServiceImpl implements CategoryService {
         log.info("IN CategoryServiceImpl - findById: {} - FINISHED SUCCESSFULLY - CategoryMapper.toDTO NOW", id);
         return CategoryMapper.toDTO(category);
     }
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     @Override
     public CategoryResponseDTO create(CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - create: STARTED");
@@ -55,7 +53,6 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryMapper.toDTO(categoryReturned);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     @Override
     public CategoryResponseDTO update(Long id, CategoryRequestDTO categoryRequestDTO) {
         log.info("IN CategoryServiceImpl - update category by id: {} - STARTED", id);
@@ -71,7 +68,6 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryMapper.toDTO(categoryReturned);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     @Override
     public CategoryResponseDTO updateCategoryFields(Long id, Map<String, Object> fields) {     // TODO: add validate
         log.info("IN CategoryServiceImpl - updateCategoryFields: STARTED");
@@ -89,7 +85,6 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryMapper.toDTO(categoryReturned);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     @Override
     public void delete(Long id) {
         log.info("IN CategoryServiceImpl - delete by id: {} - STARTED", id);

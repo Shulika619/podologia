@@ -4,6 +4,9 @@ import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.procedureCategory.ProcedureCategoryRequestDTO;
 import dev.shulika.podologia.dto.procedureCategory.ProcedureCategoryResponseDTO;
 import dev.shulika.podologia.service.ProcedureCategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,10 +22,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/procedures-with-categories")
 @RequiredArgsConstructor
+@Tag(name = "Procedure with Category", description = "Contains full information about procedure with category: specialist full info, procedure name ")
+@SecurityRequirement(name = "bearerAuth")
 public class ProcedureCategoryRestController {
     private final ProcedureCategoryService procedureCategoryService;
 
     @GetMapping
+    @Operation(summary = "Get all procedures with categories", description = "Get all procedures with categories")
     public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
         Page<ProcedureCategoryResponseDTO> procedures = procedureCategoryService.findAll(pageable);
         ApiResponse<List<ProcedureCategoryResponseDTO>> responseDTO = ApiResponse
@@ -38,6 +44,7 @@ public class ProcedureCategoryRestController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get procedure with category by id", description = "Get procedure with category by id")
     public ResponseEntity<?> findById(@PathVariable long id) {
         ProcedureCategoryResponseDTO procedureResponseDTO = procedureCategoryService.findById(id);
         ApiResponse<ProcedureCategoryResponseDTO> responseDTO = ApiResponse
@@ -49,6 +56,7 @@ public class ProcedureCategoryRestController {
     }
 
     @PostMapping
+    @Operation(summary = "Create procedure and category", description = "Create procedure and category")
     public ResponseEntity<?> create(@RequestBody @Valid ProcedureCategoryRequestDTO procedureCategoryRequestDTO) {
         ProcedureCategoryResponseDTO procedureCategoryResponseDTO = procedureCategoryService.create(procedureCategoryRequestDTO);
         ApiResponse<ProcedureCategoryResponseDTO> responseDTO = ApiResponse
@@ -60,6 +68,7 @@ public class ProcedureCategoryRestController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Edit procedure and category: Put", description = "Edit procedure and category: Put")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ProcedureCategoryRequestDTO procedureCategoryRequestDTO) {
         ProcedureCategoryResponseDTO procedureCategoryResponseDTO = procedureCategoryService.update(id, procedureCategoryRequestDTO);
         ApiResponse<ProcedureCategoryResponseDTO> responseDTO = ApiResponse
@@ -71,6 +80,7 @@ public class ProcedureCategoryRestController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Edit procedure and category: Patch", description = "Edit procedure and category: Patch")
     public ResponseEntity<?> updateProcedureFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         ProcedureCategoryResponseDTO procedureCategoryResponseDTO = procedureCategoryService.updateProcedureFields(id, fields);
         ApiResponse<ProcedureCategoryResponseDTO> responseDTO = ApiResponse
@@ -82,6 +92,7 @@ public class ProcedureCategoryRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete procedure", description = "Delete procedure")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         procedureCategoryService.delete(id);
         ApiResponse<String> responseDTO = ApiResponse
