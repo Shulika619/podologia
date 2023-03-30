@@ -1,12 +1,14 @@
-package dev.shulika.podologia.rest;
+package dev.shulika.podologia.controller;
 
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.procedure.ProcedureRequestDTO;
 import dev.shulika.podologia.dto.procedure.ProcedureResponseDTO;
 import dev.shulika.podologia.service.ProcedureService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -20,10 +22,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/procedures")
 @RequiredArgsConstructor
+@Tag(name = "Procedure", description = "Contains simple information about procedure: specialist info only id, procedure name ")
+@SecurityRequirement(name = "bearerAuth")
 public class ProcedureRestController {
     private final ProcedureService procedureService;
 
     @GetMapping
+    @Operation(summary = "Get all procedures", description = "Get all procedures")
     public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
         Page<ProcedureResponseDTO> procedures = procedureService.findAll(pageable);
         ApiResponse<List<ProcedureResponseDTO>> responseDTO = ApiResponse
@@ -39,6 +44,7 @@ public class ProcedureRestController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get procedure by id", description = "Get procedure by id")
     public ResponseEntity<?> findById(@PathVariable long id) {
         ProcedureResponseDTO procedureResponseDTO = procedureService.findById(id);
         ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
@@ -50,6 +56,7 @@ public class ProcedureRestController {
     }
 
     @PostMapping
+    @Operation(summary = "Create procedure", description = "Create procedure")
     public ResponseEntity<?> create(@RequestBody @Valid ProcedureRequestDTO procedureRequestDTO) {
         ProcedureResponseDTO procedureResponseDTO = procedureService.create(procedureRequestDTO);
         ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
@@ -61,6 +68,7 @@ public class ProcedureRestController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Edit procedure: Put", description = "Edit procedure: Put")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid ProcedureRequestDTO procedureRequestDTO) {
         ProcedureResponseDTO procedureResponseDTO = procedureService.update(id, procedureRequestDTO);
         ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
@@ -72,6 +80,7 @@ public class ProcedureRestController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Edit procedure: Patch", description = "Edit procedure: Patch")
     public ResponseEntity<?> updateProcedureFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         ProcedureResponseDTO procedureResponseDTO = procedureService.updateProcedureFields(id, fields);
         ApiResponse<ProcedureResponseDTO> responseDTO = ApiResponse
@@ -83,6 +92,7 @@ public class ProcedureRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete procedure", description = "Delete procedure")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         procedureService.delete(id);
         ApiResponse<String> responseDTO = ApiResponse

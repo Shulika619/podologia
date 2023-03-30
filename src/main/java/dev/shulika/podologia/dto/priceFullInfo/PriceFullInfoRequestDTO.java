@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import dev.shulika.podologia.model.Procedure;
 import dev.shulika.podologia.model.Specialist;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 @Data
