@@ -98,4 +98,14 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
         log.info("IN UserServiceImpl - delete by id: {} - FINISHED SUCCESSFULLY", id);
     }
+
+    @Override
+    public void block(Long id) {
+        log.info("IN UserServiceImpl - block user by id: {} - STARTED", id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(id.toString(), "User not found with id: " + id));
+        user.setEnabled(false);
+        userRepository.save(user);
+        log.info("IN UserServiceImpl - block user by id: {} - FINISHED SUCCESSFULLY", id);
+    }
 }

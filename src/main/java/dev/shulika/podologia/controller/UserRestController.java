@@ -102,4 +102,17 @@ public class UserRestController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
+    @PostMapping("/{id}/block")
+    @Operation(summary = "Block user", description = "Block user")
+    public ResponseEntity<?> blockById(@PathVariable long id) {
+        userService.block(id);
+        ApiResponse<String> responseDTO = ApiResponse
+                .<String>builder()
+                .status("SUCCESS")
+                .data("User blocked")
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
 }

@@ -19,4 +19,6 @@ public interface UserService {
     UserResponseDTO updateFields(Long id, Map<String, Object> fields);
 
     void delete(Long id);
+
+    void block(Long id);
 }
