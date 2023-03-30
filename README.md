@@ -12,7 +12,7 @@ http://localhost:8080/swagger-ui/index.html
 - Spring Web
 - Spring Validation
 - Spring Security
-- Java jwt
+- Java JWT
 - Springdoc Openapi
 - Spring Data Jpa
 - Postgresql
