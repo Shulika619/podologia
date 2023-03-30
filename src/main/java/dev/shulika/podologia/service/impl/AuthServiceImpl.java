@@ -8,7 +8,7 @@ import dev.shulika.podologia.exception.ServiceBusinessException;
 import dev.shulika.podologia.model.User;
 import dev.shulika.podologia.repository.UserRepository;
 import dev.shulika.podologia.service.AuthService;
-import dev.shulika.podologia.util.UserMapper;
+import dev.shulika.podologia.util.AuthMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,9 +32,9 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.existsByEmail(registerRequestDTO.getEmail()))
             throw new ServiceBusinessException(registerRequestDTO.getEmail(), "Email already exists");
         registerRequestDTO.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
-        User userReturned = userRepository.save(UserMapper.fromRegistrationDTO(registerRequestDTO));
+        User userReturned = userRepository.save(AuthMapper.fromRegistrationDTO(registerRequestDTO));
         log.info("IN AuthServiceImpl - register - FINISHED SUCCESSFULLY");
-        return UserMapper.toDTO(userReturned);
+        return AuthMapper.toDTO(userReturned);
     }
 
     @Override
@@ -47,6 +47,6 @@ public class AuthServiceImpl implements AuthService {
                         authRequestDTO.getPassword());
         authenticationManager.authenticate(authInputToken);
         log.info("IN AuthServiceImpl - login: FINISHED SUCCESSFULLY");
-        return UserMapper.toDTO(user);
+        return AuthMapper.toDTO(user);
     }
 }

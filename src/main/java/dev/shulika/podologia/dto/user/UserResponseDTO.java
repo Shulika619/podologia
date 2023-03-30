@@ -1,17 +1,15 @@
-package dev.shulika.podologia.dto.auth;
+package dev.shulika.podologia.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
-
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponseDTO {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class UserResponseDTO {
     private Long id;
     private String firstname;
     private String lastname;
@@ -19,4 +17,5 @@ public class AuthResponseDTO {
     private String role;
     private Boolean enabled;
     private Date createdAt;
+    private Date updatedAt;
 }

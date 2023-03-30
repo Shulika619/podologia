@@ -1,31 +1,32 @@
 package dev.shulika.podologia.util;
 
-import dev.shulika.podologia.dto.auth.AuthResponseDTO;
-import dev.shulika.podologia.dto.auth.RegisterRequestDTO;
+import dev.shulika.podologia.dto.user.UserRequestDTO;
+import dev.shulika.podologia.dto.user.UserResponseDTO;
 import dev.shulika.podologia.model.User;
 
 public class UserMapper {
 
-    public static AuthResponseDTO toDTO(User user) {
-        AuthResponseDTO registerResponseDTO = new AuthResponseDTO();
-        registerResponseDTO.setId(user.getId());
-        registerResponseDTO.setFirstname(user.getFirstname());
-        registerResponseDTO.setLastname(user.getLastname());
-        registerResponseDTO.setEmail(user.getEmail());
-        registerResponseDTO.setRole(user.getRole());
-        registerResponseDTO.setEnabled(user.getEnabled());
-        registerResponseDTO.setCreatedAt(user.getCreatedAt());
-        return registerResponseDTO;
+    public static UserResponseDTO toDTO(User user) {
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(user.getId());
+        userResponseDTO.setFirstname(user.getFirstname());
+        userResponseDTO.setLastname(user.getLastname());
+        userResponseDTO.setEmail(user.getEmail());
+        userResponseDTO.setRole(user.getRole());
+        userResponseDTO.setEnabled(user.getEnabled());
+        userResponseDTO.setCreatedAt(user.getCreatedAt());
+        userResponseDTO.setUpdatedAt(user.getUpdatedAt());
+        return userResponseDTO;
     }
 
-    public static User fromRegistrationDTO(RegisterRequestDTO registerRequestDTO) {
+    public static User fromDTO(UserRequestDTO userRequestDTO) {
         User user = new User();
-        user.setFirstname(registerRequestDTO.getFirstname());
-        user.setLastname(registerRequestDTO.getLastname());
-        user.setEmail(registerRequestDTO.getEmail());
-        user.setPassword(registerRequestDTO.getPassword());
-        user.setRole("USER");
-        user.setEnabled(true);
+        user.setFirstname(userRequestDTO.getFirstname());
+        user.setLastname(userRequestDTO.getLastname());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPassword(userRequestDTO.getPassword());
+        user.setRole(userRequestDTO.getRole());
+        user.setEnabled(userRequestDTO.getEnabled());
         return user;
     }
 }
