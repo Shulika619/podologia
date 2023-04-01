@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
         log.warn("IN GlobalExceptionHandler - AccessDeniedException");
         ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
-        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("FORBIDDEN", exception.getMessage())));
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("FORBIDDEN", "Access is denied")));
         return serviceResponse;
     }
 
