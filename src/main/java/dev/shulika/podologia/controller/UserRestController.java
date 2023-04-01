@@ -85,8 +85,8 @@ public class UserRestController {
     }
 
     @PatchMapping("/{id}")
-    @Operation(summary = "Edit user: Patch", description = "Edit user: Patch")
-    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
+    @Operation(summary = "Edit user: Patch *ONLY ADMIN", description = "Edit user: Patch *ONLY ADMIN")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         UserResponseDTO userResponseDTO = userService.updateFields(id, fields);
         ApiResponse<UserResponseDTO> responseDTO = ApiResponse

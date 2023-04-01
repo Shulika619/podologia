@@ -94,7 +94,7 @@ public class GlobalExceptionHandler {
         log.warn("IN GlobalExceptionHandler - AuthenticationException: {}", exception);
         ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
-        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("Authentication.", exception.getMessage())));
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("Authentication", exception.getMessage())));
         return serviceResponse;
     }
 }
