@@ -1,23 +1,28 @@
-version: '3'
+version: '3.1'
 
 services:
   app:
-    build:
-      context: .
+    build: .
     container_name: podologia
+    restart: always
     depends_on:
       - db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/podologia_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=1234
+      - spring.jpa.properties.hibernate.default_schema=podologia
+      - spring.liquibase.default-schema=podologia
     ports:
       - '8080:8080'
 
   db:
     image: postgres:15.1-alpine
     container_name: postgres
+    restart: always
     environment:
+      - POSTGRES_DB=podologia_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=podologia_db
+    ports:
+      - '5432:5432'
