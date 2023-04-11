@@ -16,8 +16,11 @@ public class JWTUtil {
     @Value("${jwt_secret}")
     private String secret;
 
+    @Value("${jwt_expiration}")
+    private Long expiration;
+
     public String generateToken(String email) {
-        Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(60).toInstant());
+        Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(expiration).toInstant());
 
         return JWT.create()
                 .withSubject("User details")

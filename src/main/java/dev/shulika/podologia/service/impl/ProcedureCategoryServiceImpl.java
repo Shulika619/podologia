@@ -34,7 +34,7 @@ public class ProcedureCategoryServiceImpl implements ProcedureCategoryService {
     @Override
     public Page<ProcedureCategoryResponseDTO> findAll(Pageable pageable) {
         log.info("IN ProcedureCategoryServiceImpl - findAll - STARTED");
-        Page<ProcedureCategory> procedureCategoryPages = procedureCategoryRepository.findAll(pageable);
+        Page<ProcedureCategory> procedureCategoryPages = procedureCategoryRepository.findAllWithoutNPlusOne(pageable);
         log.info("IN ProcedureCategoryServiceImpl - findAll - FINISHED SUCCESSFULLY - ProcedureCategoryMapper::toDTO NOW");
         return procedureCategoryPages.map(ProcedureCategoryMapper::toDTO);
     }

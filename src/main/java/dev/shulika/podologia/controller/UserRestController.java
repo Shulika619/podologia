@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +23,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-@Tag(name = "User", description = "ONLY FOR ADMIN. Contains all the operations that can be performed on users")
+@Tag(name = "User", description = "Contains all the operations that can be performed on users")
 @SecurityRequirement(name = "bearerAuth")
 public class UserRestController {
     private final UserServiceImpl userService;
 
     @GetMapping
-    @Operation(summary = "Get all users", description = "Get all users")
+    @Operation(summary = "Get all users  *ONLY ADMIN", description = "Get all users *ONLY ADMIN")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable) {
         Page<UserResponseDTO> users = userService.findAll(pageable);
         ApiResponse<List<UserResponseDTO>> responseDTO = ApiResponse
@@ -45,6 +47,7 @@ public class UserRestController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get user by id", description = "Get user by id")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public ResponseEntity<?> findById(@PathVariable long id) {
         UserResponseDTO userResponseDTO = userService.findById(id);
         ApiResponse<UserResponseDTO> responseDTO = ApiResponse
@@ -56,7 +59,8 @@ public class UserRestController {
     }
 
     @PostMapping
-    @Operation(summary = "Create user", description = "Create user")
+    @Operation(summary = "Create user *ONLY ADMIN", description = "Create user *ONLY ADMIN")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> create(@RequestBody @Valid UserRequestDTO userRequestDTO) {
         UserResponseDTO userResponseDTO = userService.create(userRequestDTO);
         ApiResponse<UserResponseDTO> responseDTO = ApiResponse
@@ -69,6 +73,7 @@ public class UserRestController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Edit user: Put", description = "Edit user: Put")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid UserRequestDTO userRequestDTO) {
         UserResponseDTO userResponseDTO = userService.update(id, userRequestDTO);
         ApiResponse<UserResponseDTO> responseDTO = ApiResponse
@@ -80,8 +85,9 @@ public class UserRestController {
     }
 
     @PatchMapping("/{id}")
-    @Operation(summary = "Edit user: Patch", description = "Edit user: Patch")
-    public ResponseEntity<?> updateProductFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+    @Operation(summary = "Edit user: Patch *ONLY ADMIN", description = "Edit user: Patch *ONLY ADMIN")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> updateFields(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         UserResponseDTO userResponseDTO = userService.updateFields(id, fields);
         ApiResponse<UserResponseDTO> responseDTO = ApiResponse
                 .<UserResponseDTO>builder()
@@ -92,7 +98,8 @@ public class UserRestController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete user", description = "Delete user")
+    @Operation(summary = "Delete user *ONLY ADMIN", description = "Delete user *ONLY ADMIN")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         userService.delete(id);
         ApiResponse<String> responseDTO = ApiResponse
@@ -104,7 +111,8 @@ public class UserRestController {
     }
 
     @PostMapping("/{id}/block")
-    @Operation(summary = "Block user", description = "Block user")
+    @Operation(summary = "Block user *ONLY ADMIN", description = "Block user *ONLY ADMIN")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> blockById(@PathVariable long id) {
         userService.block(id);
         ApiResponse<String> responseDTO = ApiResponse

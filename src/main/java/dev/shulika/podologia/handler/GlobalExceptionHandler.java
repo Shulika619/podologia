@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.TransientPropertyValueException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -73,6 +75,26 @@ public class GlobalExceptionHandler {
         ApiResponse<?> serviceResponse = new ApiResponse<>();
         serviceResponse.setStatus("FAILED");
         serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(exception.getMostSpecificCause().toString(), exception.getMessage())));
+        return serviceResponse;
+    }
+
+    @ExceptionHandler({AccessDeniedException.class, org.springframework.security.access.AccessDeniedException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiResponse<?> handleAccessDenied(AccessDeniedException exception) {
+        log.warn("IN GlobalExceptionHandler - AccessDeniedException");
+        ApiResponse<?> serviceResponse = new ApiResponse<>();
+        serviceResponse.setStatus("FAILED");
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("FORBIDDEN", "Access is denied")));
+        return serviceResponse;
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<?> handleAuthentication(AuthenticationException exception) {
+        log.warn("IN GlobalExceptionHandler - AuthenticationException: {}", exception);
+        ApiResponse<?> serviceResponse = new ApiResponse<>();
+        serviceResponse.setStatus("FAILED");
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO("Authentication", exception.getMessage())));
         return serviceResponse;
     }
 }

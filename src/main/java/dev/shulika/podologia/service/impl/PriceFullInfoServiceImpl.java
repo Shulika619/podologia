@@ -36,7 +36,7 @@ public class PriceFullInfoServiceImpl implements PriceFullInfoService {
     @Override
     public Page<PriceFullInfoResponseDTO> findAllByPage(Pageable pageable) {
         log.info("IN PriceFullInfoServiceImpl - findAll - STARTED");
-        Page<PriceFullInfo> pricePages = priceFullInfoRepository.findAll(pageable);
+        Page<PriceFullInfo> pricePages = priceFullInfoRepository.findAllWithoutNPlusOne(pageable);
         log.info("IN PriceFullInfoServiceImpl - findAll - FINISHED SUCCESSFULLY - PriceFullInfoMapper::toDTO NOW");
         return pricePages.map(PriceFullInfoMapper::toDTO);
     }

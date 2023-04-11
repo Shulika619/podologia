@@ -65,8 +65,6 @@ public class UserServiceImpl implements UserService {
         user.setLastname(userRequestDTO.getLastname());
         user.setEmail(userRequestDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
-        user.setRole(userRequestDTO.getRole());
-        user.setEnabled(userRequestDTO.getEnabled());
         User userReturned = userRepository.save(user);
         log.info("IN UserServiceImpl - update user by id: {} - FINISHED SUCCESSFULLY", id);
         return UserMapper.toDTO(userReturned);
