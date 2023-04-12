@@ -2,12 +2,15 @@ package dev.shulika.podologia.service.impl;
 
 import dev.shulika.podologia.dto.category.CategoryRequestDTO;
 import dev.shulika.podologia.dto.category.CategoryResponseDTO;
+import dev.shulika.podologia.dto.procedureCategory.ProcedureCategoryResponseDTO;
 import dev.shulika.podologia.exception.ObjectNotFoundException;
 import dev.shulika.podologia.exception.ServiceBusinessException;
 import dev.shulika.podologia.model.Category;
+import dev.shulika.podologia.model.ProcedureCategory;
 import dev.shulika.podologia.repository.CategoryRepository;
 import dev.shulika.podologia.service.CategoryService;
 import dev.shulika.podologia.util.CategoryMapper;
+import dev.shulika.podologia.util.ProcedureCategoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,8 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -42,6 +47,16 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new ObjectNotFoundException(id.toString(), "Category not found with id: " + id));
         log.info("IN CategoryServiceImpl - findById: {} - FINISHED SUCCESSFULLY - CategoryMapper.toDTO NOW", id);
         return CategoryMapper.toDTO(category);
+    }
+
+    @Override
+    public List<ProcedureCategoryResponseDTO> findByIdAndAllProcedures(Long id) {
+        log.info("IN CategoryServiceImpl - findByIdAndAllProcedures: {} - STARTED", id);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(id.toString(), "Category not found with id: " + id));
+        List<ProcedureCategory> procedureCategories = category.getProcedures();
+        log.info("IN CategoryServiceImpl - findByIdAndAllProcedures - Category id: {} - FINISHED SUCCESSFULLY", id);
+        return procedureCategories.stream().map(ProcedureCategoryMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
