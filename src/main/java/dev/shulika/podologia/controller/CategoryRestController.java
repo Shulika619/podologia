@@ -3,6 +3,7 @@ package dev.shulika.podologia.controller;
 import dev.shulika.podologia.dto.ApiResponse;
 import dev.shulika.podologia.dto.category.CategoryRequestDTO;
 import dev.shulika.podologia.dto.category.CategoryResponseDTO;
+import dev.shulika.podologia.dto.procedureCategory.ProcedureCategoryResponseDTO;
 import dev.shulika.podologia.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -51,6 +52,18 @@ public class CategoryRestController {
                 .<CategoryResponseDTO>builder()
                 .status("SUCCESS")
                 .data(categoryResponseDTO)
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/procedures")
+    @Operation(summary = "Get category by id and all procedures in this category", description = "Get category by id and all procedures in this category")
+    public ResponseEntity<?> findByIdAndAllProcedures(@PathVariable long id) {
+        List<ProcedureCategoryResponseDTO> proceduresDTO = categoryService.findByIdAndAllProcedures(id);
+        ApiResponse<List<ProcedureCategoryResponseDTO>> responseDTO = ApiResponse
+                .<List<ProcedureCategoryResponseDTO>>builder()
+                .status("SUCCESS")
+                .data(proceduresDTO)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

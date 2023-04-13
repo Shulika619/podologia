@@ -34,7 +34,7 @@ public class ProcedureCategory {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 }
