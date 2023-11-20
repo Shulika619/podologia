@@ -5,7 +5,7 @@ Rest API for beauty and health center
 http://localhost:8080/swagger-ui/index.html
 
 
-## Stack
+## Technologies
 
 - Spring Framefork
 - Spring Boot
